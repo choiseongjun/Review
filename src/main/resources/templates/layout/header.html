@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"    
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+
+        <!-- meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>Theme Blog - Web Template Design</title>
+        <css th:fragment="headerCss">
+        	<!-- stylesheets -->
+	        <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+	        <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+	        <link rel="stylesheet" href="/assets/css/animate.css">
+	        <link rel="stylesheet" href="/assets/css/style.css">
+		</css>
+    </head>
+<style>
+  
+</style>    <body>
+	<div th:fragment="header">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+                        <img src="assets/img/logo.png" alt="Site Logo">
+                    </a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="/">Home</span></a></li>
+                        <li><a href="/categorylist">주제별 보기</a></li>
+                        <li><a href="wordpress-themes.html">회원</a></li>
+                        < <li><a href="/categoryMake">카테고리 작성</a></li>
+                        <li><a href="resources.html">Resource</a></li> 
+                    </ul>
+                </div><!-- end of /.navbar-collapse -->
+            </div><!-- end of /.container -->
+        </nav> 
+
+        </div>
+        
+
+        <!--  Necessary scripts  -->
+	<javascript th:fragment="headerJavascript">
+ 			<script src="/assets/js/jquery-3.3.1.min.js"></script>
+            <script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+            <script src="/assets/js/jquery-ui.js"></script>
+            <script src="/assets//js/jquery.stellar.min.js"></script>
+            <script src="/assets//js/jquery.countdown.min.js"></script>
+            <script src="/assets//js/jquery.magnific-popup.min.js"></script>
+        <!-- smooth-scroll -->
+	</javascript>
+        <script>
+        $(function() {  
+            jQuery.scrollSpeed(100, 1000);
+        });
+        </script>
+
+    </body>
+</html>

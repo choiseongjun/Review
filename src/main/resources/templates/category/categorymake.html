@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<css th:replace="layout/header::headerCss" />
+</head>
+<style>
+/* 카메라 이미지스타일 */
+.upload-club-img {
+	height: 240px;
+	background-color: white; /* #f4f4f4 */
+	border-radius: 4px;
+	border: 1px solid #d8d8d8;
+	position: relative;
+	overflow: hidden;
+
+	/* 카메라 이미지스타일 */
+}
+
+.img-box.upload-club-img label {
+	position: absolute;
+	width: 110px;
+	height: 90px;
+	background-image: url(images/camera_image.jpg);
+	cursor: pointer;
+	left: 46%;
+	top: 46%;
+	margin-top: -28px;
+	margin-left: -28px;
+}
+
+#moimMake_btn {
+	margin-top: 20px;
+}
+
+#preview_img {
+	position: absolute;
+	width: 300px;
+	height: 200px;
+	object-fit:;
+	original
+}
+
+#del_img {
+	float: right;
+	vertical-align: bottom;
+}
+</style>
+<body>
+	<div th:replace="layout/header::header" />
+<div class="container">
+                <div class="row" style="margin-top: 50px;">
+		<form id="moim_make_from" class="p-5 bg-white">
+   
+						
+                      
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <label class="text-black">카테고리 이름(필수) </label>
+                                <input type="text" name="name"
+						id="name" placeholder="카테고리 입력하세요" class="form-control">
+                            </div>
+
+                        </div>
+                        
+
+                        <label class="text-black">대표사진 </label> 
+                        <input type="file" id="cate_image_file" style="display:none" />
+                        <input type="button" id="del_img" value="사진 삭제"
+						onclick="deletePreImage();">
+                        <div class="img-box upload-club-img mrgb48" style="width:500px; height:400px;margin-left:30%">
+                        	<label onclick="" for="id_club_images"
+					class="club_camera"></label>
+<!--                          	<input type="file" id="moim_image_file" name="file" hidden="true">  -->
+                        	<img id="preview_img" onerror="" alt="">
+                        </div>
+                        
+                        <div id="topicMake_btn" class="row form-group">
+                            <div class="col-md-12">
+                                <div
+						class="btn btn-primary py-2 px-4 text-white">카테고리 만들기</div>
+                            </div>
+                        </div>
+
+                    </form>
+              </div>
+            </div>
+
+</body>
+<javascript th:replace="layout/header::headerJavascript" />
+<script>
+$(document).ready(function(){
+	//로딩화면 스타트
+	$("#cate_image_file").on("change", handleImgFileSelect);
+	$('#preview_img').hide();
+
+});
+
+function handleImgFileSelect(e){
+	var files = e.target.files;
+	var filesArr = Array.prototype.slice.call(files);
+	
+	filesArr.forEach(function(f) {
+		if(!f.type.match("image.*")){
+			alert('파일을 확인해주세요.');
+			return;
+		}
+		
+		sel_file = f;
+		
+		var reader = new FileReader();
+		reader.onload = function(e){
+			$('#preview_img').attr("src", e.target.result);
+		}
+		reader.readAsDataURL(f);
+		$('.img-box.upload-club-img label').attr('style',"background-image: none");
+		$('#preview_img').show();
+	});
+}
+
+$(function () {
+
+	$('.club_camera').click(function (e) {
+
+		e.preventDefault();
+	
+		$('#cate_image_file').click();
+
+	});
+
+});
+
+function deletePreImage(){
+	$('#preview_img').hide();
+	$('#cate_image_file').val("");
+	$('.img-box.upload-club-img label').attr('style',"url(images/camera_image.jpg)");
+}
+$('#topicMake_btn').off().on('click', function () {
+
+   console.log($('#name').val())
+    
+    let topic = {};
+    topic.name = $('#name').val();
+    
+    let formData = new FormData();
+	formData.append("file", $('#cate_image_file')[0].files[0]);
+    formData.append('topic', new Blob([JSON.stringify(topic)], {
+        type: "application/json; charset=UTF-8"
+    }));
+
+    $.ajax({
+        url:'/topicMake',
+        type:'post',
+        enctype: 'multipart/form-data',
+        processData: false, //데이터를 쿼리 문자열로 변환하는 jQuery 형식 방지
+        contentType: false,
+        dataType:'json',
+        cache: false,
+        mimeType:"multipart/form-data",
+        data: formData,
+        success:function(data){
+            /* if(data.code==1){
+                alert(data.message);
+                location.href='/';
+            }else{
+                alert(data.message);
+            } */
+        },
+        error:function(e){
+        	alert(e.message);
+        }
+    });
+
+});
+</script>
+</html>
