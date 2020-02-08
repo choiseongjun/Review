@@ -34,11 +34,13 @@
                             
                                 <a href="single_design_inspiration.html">
                                     <figure>
-                                        
+                                        <a
+													th:href="@{'/weblist/' + ${topiclist.id}}">
                                         <img
 												th:src="${topiclist.filename!=null} ? ${'/getTopicImage/'+topiclist.filename} : ''"
 												alt="Image" class="img-fluid rounded"
 												style="height: 200px; width: 250px" />
+										</a>
                                     </figure>
                                     <figcaption>
                                         <h3><td th:text="${topiclist.name}" /></h3>

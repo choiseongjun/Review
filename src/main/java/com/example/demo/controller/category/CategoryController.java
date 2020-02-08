@@ -62,9 +62,9 @@ public class CategoryController {
 			returnData.put("message", "카테고리 이름을 입력해주세요");
 			return returnData;
 		} 
-		topicService.saveTopic(topic,file,webfile);
+		
 		try {
-			
+			topicService.saveTopic(topic,file,webfile);
 			returnData.put("code", "1");
 			returnData.put("message", "저장되었습니다");
 
