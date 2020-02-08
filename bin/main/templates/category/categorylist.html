@@ -28,8 +28,27 @@
             <section class="page-content">
                 <div class="container">
                     <div class="row">
-
-                        <article class="col-md-3 col-sm-4 col-xs-12">
+					<tr th:each="topiclist : ${topiclist}">
+					<article class="col-md-3 col-sm-4 col-xs-12">
+                            <div class="design-inspiration-item">
+                            
+                                <a href="single_design_inspiration.html">
+                                    <figure>
+                                        
+                                        <img
+												th:src="${topiclist.filename!=null} ? ${'/getTopicImage/'+topiclist.filename} : ''"
+												alt="Image" class="img-fluid rounded"
+												style="height: 200px; width: 250px" />
+                                    </figure>
+                                    <figcaption>
+                                        <h3><td th:text="${topiclist.name}" /></h3>
+                                    </figcaption>
+                                </a>
+                            </div>
+                        </article>
+					
+					</tr>
+                        <!-- <article class="col-md-3 col-sm-4 col-xs-12">
                             <div class="design-inspiration-item">
                                 <a href="single_design_inspiration.html">
                                     <figure>
@@ -209,7 +228,7 @@
                                     </figcaption>
                                 </a>
                             </div>
-                        </article>
+                        </article> -->
 
                     </div>
                 </div>

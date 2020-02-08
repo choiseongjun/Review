@@ -6,7 +6,7 @@ import lombok.Data;
 public class Webfile {
 
 	private long id;
-	private long catekey;
+	private long topickey;
 	private long webkey;
 	private String file_name;
 	private String real_name;

@@ -45,6 +45,5 @@ server:
         session:
          tracking-modes: cookie
 
-moimImagePath: C:/dayary/moim/image
-communityImagePath : C:/dayary/community/image
+topicImagePath: /Users/choiseongjun/git/Review/image
 

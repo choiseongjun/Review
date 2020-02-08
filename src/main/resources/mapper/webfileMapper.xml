@@ -3,9 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="topic">
-       <insert id="">
-       
+<mapper namespace="webfile">
+       <insert id="webfileinsert">
+       	 <selectKey resultType="long" keyProperty="topickey" order="BEFORE">
+       	SELECT max(id) from topic
+       	</selectKey>
+       	INSERT INTO webfile(topickey,file_name,real_name,file_size,file_path)
+    	 VALUES(#{topickey},#{file_name},#{real_name},#{file_size},#{file_path})
        </insert>
        
 </mapper>
