@@ -1,16 +1,18 @@
 
 $('#register_btn').off().on('click',function(){
-	console.log('sdfsdfsdf')
+	var yearVal =  $(searchYear).val();
+	
 	let signUpRequest = {};
 	signUpRequest.email=$('#email').val();
 	signUpRequest.nickname=$('#nickname').val();
 	signUpRequest.password=$('#password').val();
 	signUpRequest.sex=$('#sex').val();
 	signUpRequest.birth=$('#birth').val();
+	signUpRequest.role=yearVal;
 
 	let formData = new FormData();
 //	formData.append("file", $('#people_image_file')[0].files[0]);
-//	formData.append('signUpRequest', new Blob([JSON.stringify(user)], {
+//	formData.append('signUpRequest', new Blob([JSON.stringify(signUpRequest)], {
 //	        type: "application/json; charset=UTF-8"
 //	    }));
 	$.ajax({
@@ -31,6 +33,5 @@ $('#register_btn').off().on('click',function(){
 		error:function(){
 
 		}
-
 	});
 });
