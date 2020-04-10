@@ -61,7 +61,9 @@ public class AuthRestAPIs {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println("권한체크@!@!#!#");
+		System.out.println(auth);
         String jwt = jwtProvider.generateJwtToken(authentication);
         return ResponseEntity.ok(new JwtResponse(jwt));
     }

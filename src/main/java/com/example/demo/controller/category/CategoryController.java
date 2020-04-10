@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +30,9 @@ public class CategoryController {
 	
 	@GetMapping("/categorylist")
 	public String Categorylist(Model model) {
-		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println("권한체크@!@!#!#");
+		System.out.println(auth);
 		List<Topic> topiclist= topicService.selectTopic();
 		model.addAttribute("topiclist",topiclist);
 		
