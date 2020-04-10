@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,12 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.example.demo.domain.common.DateAudit;
 
+import us.flower.dayary.domain.MoimPeople;
+
 @Entity
-@Table(name = "weblist")
+@Table(name = "WEBLIST")
 public class WebList extends DateAudit{
 
 	@Id
@@ -38,7 +43,8 @@ public class WebList extends DateAudit{
     //승인여부
     @Column(name = "APP_YN",columnDefinition = "CHAR(1) default 'N'")
     private char appyn;
-    
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
+	private List<webreply> webreply;
     //사용자번호
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
