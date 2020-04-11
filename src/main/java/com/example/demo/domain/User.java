@@ -39,7 +39,6 @@ public class User{
 
     private String username;
 
-    @NaturalId
     private String email;
 
     @NotBlank

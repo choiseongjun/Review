@@ -55,31 +55,29 @@ public class AuthRestAPIs {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
+                        loginRequest.getEmail(),
                         loginRequest.getPassword()
                 )
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println("권한체크@!@!#!#");
-		System.out.println(auth);
         String jwt = jwtProvider.generateJwtToken(authentication);
         return ResponseEntity.ok(new JwtResponse(jwt));
     }
 
     @PostMapping("/signup")
     @ResponseBody
-    public ResponseEntity<String> registerUser(SignUpForm signUpRequest) {
-//        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
-//            return new ResponseEntity<String>("Fail -> Username is already taken!",
-//                    HttpStatus.BAD_REQUEST);
-//        }
-//
-//        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-//            return new ResponseEntity<String>("Fail -> Email is already in use!",
-//                    HttpStatus.BAD_REQUEST);
-//        }
+    public ResponseEntity<String> registerUser(@RequestBody SignUpForm signUpRequest) {
+        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
+            return new ResponseEntity<String>("Fail -> Username is already taken!",
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+            return new ResponseEntity<String>("Fail -> Email is already in use!",
+                    HttpStatus.BAD_REQUEST);
+        }
 
         // Creating user's account
         User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),

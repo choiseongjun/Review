@@ -48,4 +48,4 @@ server:
 topicImagePath: /Users/choiseongjun/git/Review/image
 app:
       jwtSecret : JWTSuperSecretKey
-      jwtExpirationInMs : 604800000
+      jwtExpirationInMs : 864000
