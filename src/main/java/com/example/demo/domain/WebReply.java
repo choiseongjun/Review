@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.example.demo.domain.common.DateAudit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "webreply")
@@ -35,7 +36,7 @@ public class WebReply extends DateAudit{
     //삭제여부
     @Column(name = "DELETE_YN",columnDefinition = "CHAR(1) default 'N'")
     private char deleteyn;
-    
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "WEBLIST_ID", referencedColumnName = "ID")
     private WebList weblist;
@@ -43,6 +44,22 @@ public class WebReply extends DateAudit{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
+    
+    public WebReply() {
+	}
+    
+	public WebReply(long id, String content, String parent, String depth, String replyorder, char deleteyn,
+			WebList weblist, User user) {
+		super();
+		this.id = id;
+		this.content = content;
+		this.parent = parent;
+		this.depth = depth;
+		this.replyorder = replyorder;
+		this.deleteyn = deleteyn;
+		this.weblist = weblist;
+		this.user = user;
+	}
 	public long getId() {
 		return id;
 	}

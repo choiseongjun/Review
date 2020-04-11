@@ -49,6 +49,25 @@ public class WebList extends DateAudit{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
+    
+    
+    
+	public WebList() {
+		super();
+	}
+	public WebList(long id, String title, String content, String url, char deleteyn, char appyn,
+			List<WebReply> webreply, List<Webfile> webfile, User user) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.url = url;
+		this.deleteyn = deleteyn;
+		this.appyn = appyn;
+		this.webreply = webreply;
+		this.webfile = webfile;
+		this.user = user;
+	}
 	public long getId() {
 		return id;
 	}
