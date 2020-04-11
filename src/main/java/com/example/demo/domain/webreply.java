@@ -38,7 +38,7 @@ public class webreply extends DateAudit{
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "WEBLIST_ID", referencedColumnName = "ID")
-    private WebList webList;
+    private WebList weblist;
 	//사용자번호
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")

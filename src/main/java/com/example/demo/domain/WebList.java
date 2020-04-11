@@ -15,8 +15,6 @@ import javax.persistence.Table;
 
 import com.example.demo.domain.common.DateAudit;
 
-import us.flower.dayary.domain.MoimPeople;
-
 @Entity
 @Table(name = "WEBLIST")
 public class WebList extends DateAudit{
