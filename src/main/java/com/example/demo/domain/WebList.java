@@ -42,7 +42,7 @@ public class WebList extends DateAudit{
     @Column(name = "APP_YN",columnDefinition = "CHAR(1) default 'N'")
     private char appyn;
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
-	private List<webreply> webreply;
+	private List<WebReply> webreply;
 	@OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
 	private List<Webfile> webfile;
     //사용자번호
@@ -85,11 +85,17 @@ public class WebList extends DateAudit{
 	public void setAppyn(char appyn) {
 		this.appyn = appyn;
 	}
-	public List<webreply> getWebreply() {
+	public List<WebReply> getWebreply() {
 		return webreply;
 	}
-	public void setWebreply(List<webreply> webreply) {
+	public void setWebreply(List<WebReply> webreply) {
 		this.webreply = webreply;
+	}
+	public List<Webfile> getWebfile() {
+		return webfile;
+	}
+	public void setWebfile(List<Webfile> webfile) {
+		this.webfile = webfile;
 	}
 	public User getUser() {
 		return user;
@@ -100,7 +106,9 @@ public class WebList extends DateAudit{
 	@Override
 	public String toString() {
 		return "WebList [id=" + id + ", title=" + title + ", content=" + content + ", url=" + url + ", deleteyn="
-				+ deleteyn + ", appyn=" + appyn + ", webreply=" + webreply + ", user=" + user + "]";
+				+ deleteyn + ", appyn=" + appyn + ", webreply=" + webreply + ", webfile=" + webfile + ", user=" + user
+				+ "]";
 	}
-    
+	
+    	
 }

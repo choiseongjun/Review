@@ -14,7 +14,7 @@ import com.example.demo.domain.common.DateAudit;
 
 @Entity
 @Table(name = "webreply")
-public class webreply extends DateAudit{
+public class WebReply extends DateAudit{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,4 +43,60 @@ public class webreply extends DateAudit{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getParent() {
+		return parent;
+	}
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
+	public String getDepth() {
+		return depth;
+	}
+	public void setDepth(String depth) {
+		this.depth = depth;
+	}
+	public String getReplyorder() {
+		return replyorder;
+	}
+	public void setReplyorder(String replyorder) {
+		this.replyorder = replyorder;
+	}
+	public char getDeleteyn() {
+		return deleteyn;
+	}
+	public void setDeleteyn(char deleteyn) {
+		this.deleteyn = deleteyn;
+	}
+	public WebList getWeblist() {
+		return weblist;
+	}
+	public void setWeblist(WebList weblist) {
+		this.weblist = weblist;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	@Override
+	public String toString() {
+		return "WebReply [id=" + id + ", content=" + content + ", parent=" + parent + ", depth=" + depth
+				+ ", replyorder=" + replyorder + ", deleteyn=" + deleteyn + ", weblist=" + weblist + ", user=" + user
+				+ "]";
+	}
+    
+    
 }
