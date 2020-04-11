@@ -43,9 +43,64 @@ public class WebList extends DateAudit{
     private char appyn;
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
 	private List<webreply> webreply;
+	@OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
+	private List<Webfile> webfile;
     //사용자번호
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public char getDeleteyn() {
+		return deleteyn;
+	}
+	public void setDeleteyn(char deleteyn) {
+		this.deleteyn = deleteyn;
+	}
+	public char getAppyn() {
+		return appyn;
+	}
+	public void setAppyn(char appyn) {
+		this.appyn = appyn;
+	}
+	public List<webreply> getWebreply() {
+		return webreply;
+	}
+	public void setWebreply(List<webreply> webreply) {
+		this.webreply = webreply;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	@Override
+	public String toString() {
+		return "WebList [id=" + id + ", title=" + title + ", content=" + content + ", url=" + url + ", deleteyn="
+				+ deleteyn + ", appyn=" + appyn + ", webreply=" + webreply + ", user=" + user + "]";
+	}
     
 }
