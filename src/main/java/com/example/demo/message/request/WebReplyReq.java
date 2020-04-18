@@ -14,6 +14,9 @@ public class WebReplyReq {
 	//댓글 작성 webList id
 	private Long weblist_id;
 	
+	//댓글 id
+	private Long id;
+	
 	//댓글 내용
 	private String content;
 	
@@ -37,6 +40,14 @@ public class WebReplyReq {
 
 	public void setWeblist_id(Long weblist_id) {
 		this.weblist_id = weblist_id;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getContent() {

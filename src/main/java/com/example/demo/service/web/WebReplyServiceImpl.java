@@ -1,5 +1,8 @@
 package com.example.demo.service.web;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +19,11 @@ public class WebReplyServiceImpl implements WebReplyService{
 	@Autowired
 	private ReplyRepository replyRepository;
 	
-	@Autowired
-	private UserRepository userRepository;
+//	@Autowired
+//	private UserRepository userRepository;
 	
 	@Override
-	public WebReply insertReply(WebReplyReq webReplyReq) {
+	public WebReply saveReply(WebReplyReq webReplyReq) {
 		User user = new User();
 		user.setId(webReplyReq.getUser_id());
 //		User user = userRepository.getOne(webReplyReq.getUser_id());
@@ -40,4 +43,28 @@ public class WebReplyServiceImpl implements WebReplyService{
 		return reply;
 	}
 
+	@Override
+	public List<WebReply> findAllReply(Long id) {
+		List<WebReply> replys = replyRepository.findAllByWeblist_id(id);
+		return replys;
+	}
+
+	@Override
+	public boolean editReply(WebReplyReq webReplyReq) {
+		
+		try {
+			Optional<WebReply> reply = replyRepository.findById(webReplyReq.getId());
+			
+			reply.ifPresent(selectReply -> {
+				selectReply.setContent(webReplyReq.getContent());
+				replyRepository.save(selectReply);
+			});
+			
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }
