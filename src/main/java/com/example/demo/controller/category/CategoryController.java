@@ -80,8 +80,4 @@ public class CategoryController {
 		return returnData;
 	}
 	
-	@GetMapping("/web/{category_id}")
-	public Topic getTopic(@PathVariable("category_id") long id) {
-		return topicService.viewTopic(id);
-	}
 }

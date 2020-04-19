@@ -32,5 +32,4 @@ public class TopicDaoImpl implements TopicDao{
 	public Topic viewTopic(long id) {
 		return sqlSession.selectOne("topic.viewTopic",id);
 	}
-
 }
