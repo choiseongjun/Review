@@ -35,7 +35,7 @@ logging:
                           pagination: debug
                           
 server:
-    port: 8080
+    port: 9993
     servlet:
       multipart:
         maxFileSize: 100MB
