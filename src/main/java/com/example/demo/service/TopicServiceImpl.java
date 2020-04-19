@@ -59,5 +59,10 @@ public class TopicServiceImpl implements TopicService{
 	public List<Topic> selectTopic() {
 		return topicDao.selectTopic();
 	}
+	
+	@Override
+	public Topic viewTopic(long id) {
+		return topicDao.viewTopic(id);
+	}
 
 }
