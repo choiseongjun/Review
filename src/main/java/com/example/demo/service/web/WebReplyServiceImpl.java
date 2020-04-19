@@ -51,7 +51,6 @@ public class WebReplyServiceImpl implements WebReplyService{
 
 	@Override
 	public boolean editReply(WebReplyReq webReplyReq) {
-		
 		try {
 			Optional<WebReply> reply = replyRepository.findById(webReplyReq.getId());
 			
@@ -66,5 +65,23 @@ public class WebReplyServiceImpl implements WebReplyService{
 			return false;
 		}
 	}
+
+	@Override
+	public boolean deleteReply(WebReplyReq webReplyReq) {
+		try {
+			Optional<WebReply> reply = replyRepository.findById(webReplyReq.getId());
+			
+			reply.ifPresent(selectReply -> {
+				selectReply.setDeleteyn('Y');
+				replyRepository.save(selectReply);
+			});
+			
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	
 }

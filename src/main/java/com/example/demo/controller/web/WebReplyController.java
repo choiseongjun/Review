@@ -3,6 +3,7 @@ package com.example.demo.controller.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,6 +64,21 @@ public class WebReplyController {
 	public ResponseEntity<?> editReply(@RequestBody WebReplyReq webReplyReq) {
 		try {
 			return new ResponseEntity<>(webReplyService.editReply(webReplyReq), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("잘못된 요청입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	/*
+	 * 댓글 삭제
+	 * @param : WebReplyReq
+	 * @return : WebReply
+	 * */	
+	@DeleteMapping("/reply")
+	public ResponseEntity<?> deleteReply(@RequestBody WebReplyReq webReplyReq) {
+		try {
+			return new ResponseEntity<>(webReplyService.deleteReply(webReplyReq), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>("잘못된 요청입니다.", HttpStatus.INTERNAL_SERVER_ERROR);

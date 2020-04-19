@@ -9,4 +9,5 @@ public interface WebReplyService {
 	WebReply saveReply(WebReplyReq webReplyReq);
 	List<WebReply> findAllReply(Long id);
 	boolean editReply(WebReplyReq webReplyReq);
+	boolean deleteReply(WebReplyReq webReplyReq);
 }
