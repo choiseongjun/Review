@@ -14,5 +14,6 @@ public interface TopicService {
 	byte[] getTopicImage(String imageName) throws Exception;
 
 	List<Topic> selectTopic();
-
+	
+	Topic viewTopic(long id);
 }

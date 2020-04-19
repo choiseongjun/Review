@@ -17,5 +17,6 @@
       from topic a,webfile b
       where a.id=b.topickey
        </select>
-       
+       <select id="viewTopic" resultType="com.example.demo.domain.Topic">select * from topic where id=#{id}</select>
+
 </mapper>
