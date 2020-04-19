@@ -64,4 +64,5 @@ public class TopicServiceImpl implements TopicService{
 	public Topic viewTopic(long id) {
 		return topicDao.viewTopic(id);
 	}
+
 }

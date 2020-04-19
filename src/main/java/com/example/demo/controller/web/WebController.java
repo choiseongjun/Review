@@ -36,10 +36,11 @@ public class WebController {
 		return new ResponseEntity<>(weblist, HttpStatus.OK);
 	}
 	
+
 	@GetMapping("/web/{category_id}")
 	public ResponseEntity<?> selectTopic(@PathVariable("category_id") long id){
 		return new ResponseEntity<>(topicService.viewTopic(id),HttpStatus.OK);
 	}
-	
+
 	
 }
