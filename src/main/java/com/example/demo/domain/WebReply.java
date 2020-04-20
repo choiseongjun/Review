@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,25 +23,32 @@ public class WebReply extends DateAudit{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private long id;
-	 //제목
+	
+	 //댓글 내용
     @Column(name = "CONTENT")
     private String content;
+    
     //부모키
     @Column(name = "PARENT")
     private String parent; 
+    
     //깊이
     @Column(name = "depth")
     private String depth;
+    
     //순서
     @Column(name = "REPLY_ORDER")
     private String replyorder;
+    
     //삭제여부
     @Column(name = "DELETE_YN",columnDefinition = "CHAR(1) default 'N'")
     private char deleteyn;
+    
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "WEBLIST_ID", referencedColumnName = "ID")
     private WebList weblist;
+    
 	//사용자번호
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
@@ -48,8 +57,8 @@ public class WebReply extends DateAudit{
     public WebReply() {
 	}
     
-	public WebReply(long id, String content, String parent, String depth, String replyorder, char deleteyn,
-			WebList weblist, User user) {
+	public WebReply(long id, String content, String parent, String depth, String replyorder,
+			char deleteyn, WebList weblist, User user) {
 		super();
 		this.id = id;
 		this.content = content;
@@ -60,6 +69,7 @@ public class WebReply extends DateAudit{
 		this.weblist = weblist;
 		this.user = user;
 	}
+
 	public long getId() {
 		return id;
 	}
@@ -108,6 +118,7 @@ public class WebReply extends DateAudit{
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
 	@Override
 	public String toString() {
 		return "WebReply [id=" + id + ", content=" + content + ", parent=" + parent + ", depth=" + depth
