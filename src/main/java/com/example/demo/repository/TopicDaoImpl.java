@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.Topic;
@@ -25,6 +26,11 @@ public class TopicDaoImpl implements TopicDao{
 	@Override
 	public List<Topic> selectTopic() {
 		return sqlSession.selectList("topic.selectTopic");
+	}
+	
+	@Override
+	public Topic viewTopic(long id) {
+		return sqlSession.selectOne("topic.viewTopic",id);
 	}
 
 }

@@ -7,6 +7,7 @@ spring:
       enabled: true
   thymeleaf:
         cache: false
+        enabled: false
 
   datasource:
       driverClassName : net.sf.log4jdbc.sql.jdbcapi.DriverSpy
@@ -49,3 +50,4 @@ topicImagePath: /Users/choiseongjun/git/Review/image
 app:
       jwtSecret : JWTSuperSecretKey
       jwtExpirationInMs : 864000
+      

@@ -12,5 +12,6 @@ public interface TopicDao {
 	void saveTopic(Topic topic, MultipartFile file,Webfile webfile);
 
 	List<Topic> selectTopic();
-
+	
+	Topic viewTopic(long id);
 }
