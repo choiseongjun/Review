@@ -11,7 +11,6 @@ import com.example.demo.domain.WebList;
 import com.example.demo.domain.WebReply;
 import com.example.demo.message.request.WebReplyReq;
 import com.example.demo.repository.ReplyRepository;
-import com.example.demo.repository.UserRepository;
 
 @Service
 public class WebReplyServiceImpl implements WebReplyService{

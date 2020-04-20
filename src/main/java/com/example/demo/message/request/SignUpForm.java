@@ -2,8 +2,6 @@ package com.example.demo.message.request;
 
 import java.util.Set;
 
-import javax.validation.constraints.*;
-
 public class SignUpForm {
     private String name;
 
