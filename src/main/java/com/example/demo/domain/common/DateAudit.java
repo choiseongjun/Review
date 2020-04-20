@@ -1,7 +1,6 @@
 package com.example.demo.domain.common;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -14,7 +13,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
