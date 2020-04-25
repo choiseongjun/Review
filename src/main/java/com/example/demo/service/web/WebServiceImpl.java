@@ -1,9 +1,9 @@
 package com.example.demo.service.web;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.WebList;
 import com.example.demo.exception.ResourceNotFoundException;
@@ -14,10 +14,10 @@ public class WebServiceImpl implements WebService {
 
    @Autowired
    WebRepository webRepository;
-
+   
    //서비스 작성
    @Override
-   public WebList insert(WebList webList) {
+   public WebList insert(WebList webList, MultipartFile files) {
       webRepository.save(webList);
       return webList;
    }

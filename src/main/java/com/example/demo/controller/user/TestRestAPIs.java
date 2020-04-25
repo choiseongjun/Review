@@ -1,14 +1,32 @@
 package com.example.demo.controller.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.repository.UserRepository;
+import com.example.demo.security.jwt.JwtProvider;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class TestRestAPIs {
 	
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	JwtProvider jwtProvider;
+	@GetMapping("/api/test/aaa")
+	public String userAccessaa(@RequestHeader (name="Authorization", required=false) String token) {
+		System.out.println(token);
+		if(jwtProvider.validateJwtToken(token)) {
+			System.out.println(jwtProvider.getUserNameFromJwtToken(token));
+		}
+		//userRepository.findby
+		return ">>> User Contents!";
+	}
 	@GetMapping("/api/test/user")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public String userAccess() {

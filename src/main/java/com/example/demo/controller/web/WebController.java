@@ -1,7 +1,11 @@
 package com.example.demo.controller.web;
 
+import java.io.File;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +15,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.WebList;
+import com.example.demo.domain.Webfile;
 import com.example.demo.service.TopicService;
+import com.example.demo.service.web.WebFileService;
 import com.example.demo.service.web.WebService;
 
 @RestController
@@ -24,13 +33,19 @@ public class WebController {
 	WebService webService;
 	
 	@Autowired
-	TopicService topicService;
+	WebFileService webFileservice;
 	
-	//서비스 작성
+	@Autowired
+	TopicService topicService;
+	 
+	   //서비스 작성
 	   @PostMapping("/web/service")
-	   public ResponseEntity<?> insert(@RequestBody WebList webList){
-	      WebList insert = webService.insert(webList);
-	      return new ResponseEntity<>(insert, HttpStatus.OK);
+	   public ResponseEntity<?> insert(@RequestBody WebList webList,
+			   HttpServletRequest request, @RequestPart(required = false) MultipartFile files
+			   ,@RequestHeader (name="Authorization", required=false) String token)throws Exception{
+		   
+		   webService.insert(webList,files);
+		   return new ResponseEntity<>(HttpStatus.OK);
 	   }
 	   
 	   //서비스 수정
@@ -62,11 +77,11 @@ public class WebController {
 	      return new ResponseEntity<>(webService.selectOne(id), HttpStatus.OK);
 	   }
 
-
-	@GetMapping("/web/{category_id}")
-	public ResponseEntity<?> selectTopic(@PathVariable("category_id") long id){
-		return new ResponseEntity<>(topicService.viewTopic(id),HttpStatus.OK);
-	}
-
+	   //주제(카테고리 조회)
+	   @GetMapping("/web/{category_id}")
+		  public ResponseEntity<?>selectTopic(@PathVariable("category_id") long id){
+			 return new ResponseEntity<>(topicService.viewTopic(id),HttpStatus.OK);
+		}
+		
 	
 }
