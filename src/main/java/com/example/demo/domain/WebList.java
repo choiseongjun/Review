@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +16,6 @@ import javax.persistence.Table;
 
 import com.example.demo.domain.common.DateAudit;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -52,7 +52,7 @@ public class WebList extends DateAudit{
 	@OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
 	private List<Webfile> webfile;
     //사용자번호
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade={CascadeType.ALL})
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
   

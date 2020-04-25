@@ -10,7 +10,7 @@ import com.example.demo.domain.WebList;
 public interface WebService {
 
    //서비스 작성
-   WebList insert(WebList webList, MultipartFile files);
+   WebList insert(String user_id, WebList webList, MultipartFile files);
    
    //서비스 수정
    void update(long id, WebList webList);
@@ -23,5 +23,7 @@ public interface WebService {
    
    //서비스 리스트 조회
    List<WebList> selectWebAll();
+
+   byte[] getWebImage(String imageName) throws Exception;
 
 }

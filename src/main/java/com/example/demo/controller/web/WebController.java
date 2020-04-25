@@ -1,13 +1,15 @@
 package com.example.demo.controller.web;
 
-import java.io.File;
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +17,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.domain.User;
 import com.example.demo.domain.WebList;
-import com.example.demo.domain.Webfile;
 import com.example.demo.service.TopicService;
 import com.example.demo.service.web.WebFileService;
 import com.example.demo.service.web.WebService;
@@ -40,14 +41,28 @@ public class WebController {
 	 
 	   //서비스 작성
 	   @PostMapping("/web/service")
-	   public ResponseEntity<?> insert(@RequestBody WebList webList,
-			   HttpServletRequest request, @RequestPart(required = false) MultipartFile files
-			   ,@RequestHeader (name="Authorization", required=false) String token)throws Exception{
+	   public Map<String, Object> insert(@RequestPart(name="webList") WebList webList,
+			   @RequestPart(name = "file", required = false) MultipartFile files
+			   ,Principal principal)throws Exception{
+		   String user_id = principal.getName();
+		   Map<String, Object> returnData = new HashMap<String, Object>();
+		   try {
+			   	webService.insert(user_id,webList,files);
+				returnData.put("code", "1");
+				returnData.put("message", "저장되었습니다");
+
+			} catch (Exception e) {
+				returnData.put("code", "E3290");
+				returnData.put("message", "데이터 확인 후 다시 시도해주세요.");
+			}
 		   
-		   webService.insert(webList,files);
-		   return new ResponseEntity<>(HttpStatus.OK);
+		   return returnData;
 	   }
-	   
+
+	   @GetMapping(value="/getWebImage/{imageName:.+}",produces = MediaType.IMAGE_JPEG_VALUE)
+	   public byte[] getMoimImage(@PathVariable("imageName") String imageName) throws Exception {
+		   return webService.getWebImage(imageName);
+		}
 	   //서비스 수정
 	   @PutMapping("/web/service/{id}")
 	   public ResponseEntity<?> update(@PathVariable("id")long id,@RequestBody WebList webList){

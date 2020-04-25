@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,9 +23,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
-            "username"
-        }),
-        @UniqueConstraint(columnNames = {
             "email"
         })
 })
@@ -35,7 +33,7 @@ public class User{
 
     private String name;
 
-    private String username;
+    private String userid;
 
     private String email;
 
@@ -48,15 +46,15 @@ public class User{
     	inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "user",cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<WebList> weblist;
     
     public User() {}
 
-    public User(String name, String username, String email, String password) {
+    public User(String name, String userid, String email, String password) {
         this.name = name;
-        this.username = username;
+        this.userid = userid;
         this.email = email;
         this.password = password;
     }
@@ -69,15 +67,16 @@ public class User{
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    public String getUserid() {
+		return userid;
+	}
 
-    public String getName() {
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public String getName() {
         return name;
     }
 

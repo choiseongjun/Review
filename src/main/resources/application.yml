@@ -36,7 +36,7 @@ logging:
                           pagination: debug
                           
 server:
-    port: 9990
+    port: 8080
     servlet:
       multipart:
         maxFileSize: 100MB
@@ -46,7 +46,7 @@ server:
         session:
          tracking-modes: cookie
 
-webImagePath: C:\Users\LG\Documents\workspace-spring-tool-suite-4-4.6.0.RELEASE\Review_new2\image\
+webImagePath: /Users/choiseongjun/git/Review/image/
 app:
       jwtSecret : JWTSuperSecretKey
       jwtExpirationInMs : 864000

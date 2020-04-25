@@ -5,7 +5,7 @@ import java.util.Set;
 public class SignUpForm {
     private String name;
 
-    private String username;
+    private String userid;
 
     private String email;
     
@@ -21,15 +21,17 @@ public class SignUpForm {
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
-    }
+   
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    public String getUserid() {
+		return userid;
+	}
 
-    public String getEmail() {
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public String getEmail() {
         return email;
     }
 
