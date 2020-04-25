@@ -15,10 +15,9 @@ import com.example.demo.domain.Topic;
 import com.example.demo.domain.Webfile;
 import com.example.demo.repository.TopicDao;
 
-
 @Service
 public class TopicServiceImpl implements TopicService{
-	@Value("${topicImagePath}")
+	@Value("${webImagePath}")
 	private String topicImagePath;
 	@Autowired
 	TopicDao topicDao;

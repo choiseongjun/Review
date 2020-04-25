@@ -46,7 +46,7 @@ server:
         session:
          tracking-modes: cookie
 
-topicImagePath: /Users/choiseongjun/git/Review/image
+webImagePath: /Users/choiseongjun/git/Review/image/
 app:
       jwtSecret : JWTSuperSecretKey
       jwtExpirationInMs : 864000

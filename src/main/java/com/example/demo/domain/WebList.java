@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,11 @@ import javax.persistence.Table;
 
 import com.example.demo.domain.common.DateAudit;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter 
+@Setter
 @Entity
 @Table(name = "WEBLIST")
 public class WebList extends DateAudit{
@@ -46,88 +52,9 @@ public class WebList extends DateAudit{
 	@OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
 	private List<Webfile> webfile;
     //사용자번호
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade={CascadeType.ALL})
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
-    
-    
-    
-	public WebList() {
-		super();
-	}
-	public WebList(long id, String title, String content, String url, char deleteyn, char appyn,
-			List<WebReply> webreply, List<Webfile> webfile, User user) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.url = url;
-		this.deleteyn = deleteyn;
-		this.appyn = appyn;
-		this.webreply = webreply;
-		this.webfile = webfile;
-		this.user = user;
-	}
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
-	public char getDeleteyn() {
-		return deleteyn;
-	}
-	public void setDeleteyn(char deleteyn) {
-		this.deleteyn = deleteyn;
-	}
-	public char getAppyn() {
-		return appyn;
-	}
-	public void setAppyn(char appyn) {
-		this.appyn = appyn;
-	}
-	public List<WebReply> getWebreply() {
-		return webreply;
-	}
-	public void setWebreply(List<WebReply> webreply) {
-		this.webreply = webreply;
-	}
-	public List<Webfile> getWebfile() {
-		return webfile;
-	}
-	public void setWebfile(List<Webfile> webfile) {
-		this.webfile = webfile;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	@Override
-	public String toString() {
-		return "WebList [id=" + id + ", title=" + title + ", content=" + content + ", url=" + url + ", deleteyn="
-				+ deleteyn + ", appyn=" + appyn + ", webreply=" + webreply + ", webfile=" + webfile + ", user=" + user
-				+ "]";
-	}
-	
+  
     	
 }
