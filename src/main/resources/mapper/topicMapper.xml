@@ -18,4 +18,24 @@
       where a.id=b.topickey
        </select>
        
-</mapper>
+       <select id="selectCategory" resultType="com.example.demo.domain.Category">
+	       WITH recursive cte AS (
+			SELECT 
+					id,
+					NAME, 
+					parent, 
+					1 AS lev 
+			FROM category 
+			WHERE parent IS NULL 
+			UNION ALL 
+			SELECT 
+				c.id, 
+				c.name, 
+				c.parent, 1+LEV AS lev 
+			FROM category AS c 
+			INNER JOIN cte 
+			ON c.parent = cte.id
+		)
+		SELECT id, IFNULL(parent,0) AS pidx, NAME FROM cte;
+       </select>
+</mapper> 
