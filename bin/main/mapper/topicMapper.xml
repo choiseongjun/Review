@@ -18,24 +18,34 @@
       where a.id=b.topickey
        </select>
        
-       <select id="selectCategory" resultType="com.example.demo.domain.Category">
+       <select id="selectCategory" resultMap="subCategory">
+       	select id, name, parent from category where parent is null
+       </select>
+       
+       <select id="selectSubCategory" resultType="com.example.demo.domain.Category">
 	       WITH recursive cte AS (
 			SELECT 
 					id,
 					NAME, 
-					parent, 
-					1 AS lev 
+					parent
 			FROM category 
-			WHERE parent IS NULL 
+			WHERE parent = #{id} 
 			UNION ALL 
 			SELECT 
 				c.id, 
 				c.name, 
-				c.parent, 1+LEV AS lev 
+				c.parent
 			FROM category AS c 
 			INNER JOIN cte 
 			ON c.parent = cte.id
 		)
-		SELECT id, IFNULL(parent,0) AS pidx, NAME FROM cte;
+		SELECT id, parent, NAME FROM cte;
        </select>
+       
+       <resultMap type="com.example.demo.domain.Category" id="subCategory">
+       		<result property="id" column="id"/>
+       		<result property="name" column="name"/>
+       		<result property="parent" column="parent"/>
+       		<collection property="subCategory" column="id" javaType="java.util.ArrayList" ofType="com.example.demo.domain.Category" select="selectSubCategory"></collection>
+       </resultMap>
 </mapper> 
