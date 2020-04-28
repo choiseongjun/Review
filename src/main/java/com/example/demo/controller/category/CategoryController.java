@@ -39,7 +39,6 @@ public class CategoryController {
 	
 	@GetMapping("/category")
 	public ResponseEntity<?> selectCategory() {
-		System.out.println("띠용");
 		try {
 			return new ResponseEntity<>(categoryService.selectCategory(), HttpStatus.OK);
 		} catch (Exception e) {

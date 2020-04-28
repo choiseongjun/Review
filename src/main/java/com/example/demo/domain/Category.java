@@ -11,6 +11,9 @@ public class Category{
 	//카테고리 id
 	private Long id;
 	
+	//카테고리 코드명
+	private String mCode;
+	
 	//카테고리 이름
 	private String name;
 	
