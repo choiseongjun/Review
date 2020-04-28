@@ -1,7 +1,5 @@
 package com.example.demo.domain;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,8 +13,15 @@ import javax.persistence.Table;
 import com.example.demo.domain.common.DateAudit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "webreply")
+@Getter
+@Setter
+@AllArgsConstructor
 public class WebReply extends DateAudit{
 	
 	@Id
@@ -57,68 +62,7 @@ public class WebReply extends DateAudit{
     public WebReply() {
 	}
     
-	public WebReply(long id, String content, String parent, String depth, String replyorder,
-			char deleteyn, WebList weblist, User user) {
-		super();
-		this.id = id;
-		this.content = content;
-		this.parent = parent;
-		this.depth = depth;
-		this.replyorder = replyorder;
-		this.deleteyn = deleteyn;
-		this.weblist = weblist;
-		this.user = user;
-	}
 
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
-	public String getParent() {
-		return parent;
-	}
-	public void setParent(String parent) {
-		this.parent = parent;
-	}
-	public String getDepth() {
-		return depth;
-	}
-	public void setDepth(String depth) {
-		this.depth = depth;
-	}
-	public String getReplyorder() {
-		return replyorder;
-	}
-	public void setReplyorder(String replyorder) {
-		this.replyorder = replyorder;
-	}
-	public char getDeleteyn() {
-		return deleteyn;
-	}
-	public void setDeleteyn(char deleteyn) {
-		this.deleteyn = deleteyn;
-	}
-	public WebList getWeblist() {
-		return weblist;
-	}
-	public void setWeblist(WebList weblist) {
-		this.weblist = weblist;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
 	@Override
 	public String toString() {
 		return "WebReply [id=" + id + ", content=" + content + ", parent=" + parent + ", depth=" + depth

@@ -15,8 +15,11 @@ import javax.persistence.Table;
 
 import com.example.demo.domain.common.DateAudit;
 
+import lombok.Getter;
+
 @Entity
 @Table(name = "WEBLIST")
+@Getter
 public class WebList extends DateAudit{
 
 	@Id

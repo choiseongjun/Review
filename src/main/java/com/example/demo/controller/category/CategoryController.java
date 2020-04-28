@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,20 +15,37 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.Topic;
 import com.example.demo.domain.Webfile;
 import com.example.demo.service.TopicService;
+import com.example.demo.service.category.CategoryService;
 
 
-@Controller
+@RestController
+@RequestMapping("/web")
 public class CategoryController {
 
 	@Autowired
 	TopicService topicService;
+	
+	@Autowired
+	private CategoryService categoryService;
+	
+	@GetMapping("/category")
+	public ResponseEntity<?> selectCategory() {
+		try {
+			return new ResponseEntity<>(categoryService.selectCategory(), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("Internal Server ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 	@GetMapping("/categorylist")
 	public String Categorylist(Model model) {
