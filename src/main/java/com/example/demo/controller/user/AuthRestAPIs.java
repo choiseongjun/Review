@@ -25,6 +25,7 @@ import com.example.demo.domain.RoleName;
 import com.example.demo.domain.User;
 import com.example.demo.message.request.LoginForm;
 import com.example.demo.message.request.SignUpForm;
+import com.example.demo.message.response.ApiResponseMessage;
 import com.example.demo.message.response.JwtResponse;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
@@ -51,7 +52,7 @@ public class AuthRestAPIs {
     JwtProvider jwtProvider;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
+    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -86,9 +87,7 @@ public class AuthRestAPIs {
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
-        System.out.println("Role은???@#$");
         strRoles.forEach(role -> {
-        	System.out.println(role);
         	switch(role) {
         	
 	    		case "admin":
