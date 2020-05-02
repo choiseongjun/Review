@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.User;
 import com.example.demo.domain.WebList;
-import com.example.demo.service.TopicService;
+import com.example.demo.service.category.CategoryService;
 import com.example.demo.service.web.WebFileService;
 import com.example.demo.service.web.WebService;
 
@@ -37,8 +37,8 @@ public class WebController {
 	WebFileService webFileservice;
 	
 	@Autowired
-	TopicService topicService;
-	 
+	CategoryService categoryService;
+	
 	   //서비스 작성
 	   @PostMapping("/web/service")
 	   public Map<String, Object> insert(@RequestPart(name="webList") WebList webList,
@@ -95,7 +95,9 @@ public class WebController {
 	   //주제(카테고리 조회)
 	   @GetMapping("/web/{category_id}")
 		  public ResponseEntity<?>selectTopic(@PathVariable("category_id") long id){
-			 return new ResponseEntity<>(topicService.viewTopic(id),HttpStatus.OK);
+//			 return new ResponseEntity<>(topicService.viewTopic(id),HttpStatus.OK);
+			 return new ResponseEntity<>(categoryService.selectCategory(),HttpStatus.OK);
+			 
 		}
 		
 	

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="category">
+       
+       <select id="selectCategory" resultMap="subCategory">
+       	select id, name, parent, m_code from category where parent is null
+       </select>
+       
+       <select id="selectSubCategory" resultType="com.example.demo.domain.Category">
+	       WITH recursive cte AS (
+			SELECT 
+					id,
+					m_code,
+					name, 
+					parent
+			FROM category 
+			WHERE parent = #{id} 
+			UNION ALL 
+			SELECT 
+				c.id,
+				c.m_code, 
+				c.name, 
+				c.parent
+			FROM category AS c 
+			INNER JOIN cte 
+			ON c.parent = cte.id
+		)
+		SELECT id, parent, NAME FROM cte;
+       </select>
+       
+       <resultMap type="com.example.demo.domain.Category" id="subCategory">
+       		<result property="id" column="id"/>
+       		<result property="name" column="name"/>
+       		<result property="parent" column="parent"/>
+       		<result property="mCode" column="m_code"/>
+       		<collection property="subCategory" column="id" javaType="java.util.ArrayList" ofType="com.example.demo.domain.Category" select="selectSubCategory"></collection>
+       </resultMap>
+</mapper> 
