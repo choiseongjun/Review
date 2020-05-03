@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.demo.service.web.WebService;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -34,6 +36,7 @@ import com.example.demo.service.web.WebService;
 )
 @Transactional
 @AutoConfigureMockMvc
+@Slf4j
 public class ReviewApplicationTests {
 	public org.jboss.logging.Logger logger = LoggerFactory.logger(this.getClass());
    
