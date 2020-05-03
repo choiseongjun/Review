@@ -1,12 +1,17 @@
 plugins {
 	id 'org.springframework.boot' version '2.2.4.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'java'
 }
 
 group = 'co.sj'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
 
 repositories {
 	mavenCentral()
@@ -42,7 +47,13 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
-compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.2.0.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.2.0.RELEASE'
+
+	//querydsl
+	def querydslVersion = "4.1.4"
+    implementation ("com.querydsl:querydsl-core:$querydslVersion")
+    implementation ("com.querydsl:querydsl-apt:$querydslVersion")
+    implementation ("com.querydsl:querydsl-jpa:$querydslVersion")
     
     //imgscalr-lib
     implementation 'org.imgscalr:imgscalr-lib:4.2'
@@ -69,4 +80,25 @@ compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version
 
 test {
 	useJUnitPlatform()
+}
+
+// querydsl 적용
+def querydslSrcDir = 'src/main/generated'
+
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslSrcDir
+}
+
+compileQuerydsl{
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslSrcDir]
+        }
+    }
 }
