@@ -79,7 +79,12 @@ public class AuthRestAPIs {
             return new ResponseEntity<String>("Fail -> Email is already in use!",
                     HttpStatus.BAD_REQUEST);
         }
-
+        System.out.println("--------------log---------");
+        System.out.println(signUpRequest.getName());
+        System.out.println(signUpRequest.getUserid());
+        System.out.println(signUpRequest.getEmail());
+        System.out.println(signUpRequest.getPassword());
+        System.out.println("--------------log---------");
         // Creating user's account
         User user = new User(signUpRequest.getName(), signUpRequest.getUserid(),
                 signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()));
