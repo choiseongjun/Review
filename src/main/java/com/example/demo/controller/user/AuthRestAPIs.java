@@ -93,6 +93,7 @@ public class AuthRestAPIs {
         Set<Role> roles = new HashSet<>();
 
         strRoles.forEach(role -> {
+        	System.out.println("ROle??"+role);
         	switch(role) {
         	
 	    		case "admin":
