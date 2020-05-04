@@ -91,7 +91,7 @@ public class AuthRestAPIs {
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
-
+        System.out.println("signupRequest"+signUpRequest.getRole());
         strRoles.forEach(role -> {
         	System.out.println("ROle??"+role);
         	switch(role) {
