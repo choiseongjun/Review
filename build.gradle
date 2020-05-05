@@ -9,10 +9,6 @@ group = 'co.sj'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-configurations {
-    querydsl.extendsFrom compileClasspath
-}
-
 repositories {
 	mavenCentral()
 }
@@ -83,7 +79,7 @@ test {
 }
 
 // querydsl 적용
-def querydslSrcDir = 'src/main/generated'
+def querydslSrcDir = "$buildDir/generated"
 
 querydsl {
     library = "com.querydsl:querydsl-apt"
@@ -92,7 +88,11 @@ querydsl {
 }
 
 compileQuerydsl{
-    options.annotationProcessorPath = configurations.querydsl
+	options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+	querydsl.extendsFrom compileClasspath
 }
 
 sourceSets {

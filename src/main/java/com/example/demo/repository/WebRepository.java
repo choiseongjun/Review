@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.domain.WebList;
 
 @Repository
-public interface WebRepository extends JpaRepository<WebList, Long>{
+public interface WebRepository extends JpaRepository<WebList, Long>, WebRepositoryCustom{
 
 }

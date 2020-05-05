@@ -2,10 +2,13 @@ package com.example.demo.service.web;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.example.demo.domain.WebList;
+import com.example.demo.domain.WebListDto;
 
 public interface WebService {
 
@@ -22,8 +25,10 @@ public interface WebService {
    WebList selectOne(long id);
    
    //서비스 리스트 조회
-   List<WebList> selectWebAll();
+   Page<WebList> selectWebAll(Pageable pageable);
 
    byte[] getWebImage(String imageName) throws Exception;
+   
+   Page<WebListDto> getWebLists(Pageable pageable);
 
 }
