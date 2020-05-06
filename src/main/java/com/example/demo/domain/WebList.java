@@ -49,12 +49,26 @@ public class WebList extends DateAudit{
     private char appyn;
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
 	private List<WebReply> webreply;
-	@OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
-	private List<Webfile> webfile;
+//	@OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
+//	private List<Webfile> webfile;
     //사용자번호
     @ManyToOne(fetch = FetchType.LAZY,cascade={CascadeType.ALL})
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
   
+    @Column(name = "FILE_NAME")
+	private String file_name;
+    
+	@Column(name = "REAL_NAME")
+	private String real_name;
+	
+	@Column(name = "FILE_SIZE")
+	private Long file_size;
+	
+	@Column(name = "FILE_PATH")
+	private String file_path;
+	
+	@Column(name = "IMAGEEXTENSION")
+	private String ImageExtension;
     	
 }
