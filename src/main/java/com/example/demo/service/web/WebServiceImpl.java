@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.persistence.Tuple;
 import javax.transaction.Transactional;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -27,6 +28,7 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.WebRepository;
 import com.example.demo.repository.WebfileRepository;
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.JPQLQuery;
 
 import static com.example.demo.domain.QWebList.*;
@@ -72,9 +74,9 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 			String imageNAME = file.getName();
 			String savedName = uid.toString();// 랜덤아이디
 			webList.setImageExtension(fileExtension);
-//	        webList.setFile_name(savedName);
-//	        webList.setReal_name(originalFileName);
-//	        webList.setFile_path(webImagePath);
+	        webList.setFile_name(savedName);
+	        webList.setReal_name(originalFileName);
+	        webList.setFile_path(webImagePath);
 
 			// 파일업로드
 			try {
@@ -114,6 +116,7 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 	      final QWebList qWebList = webList;
 	      
 	      JPQLQuery query = from(webList);
+	    		  				
 	      List<WebList> webLists = getQuerydsl().applyPagination(pageable, query).fetch();
 	      
 	      long totalcount = query.fetchCount();

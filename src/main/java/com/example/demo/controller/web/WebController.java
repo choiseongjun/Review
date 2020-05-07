@@ -63,7 +63,7 @@ public class WebController {
 		return returnData;
 	}
 
-	@GetMapping(value = "/getWebImage/{imageName:.+}", produces = MediaType.IMAGE_JPEG_VALUE)
+	@GetMapping(value = "/getWebImage/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
 	public byte[] getMoimImage(@PathVariable("imageName") String imageName) throws Exception {
 		return webService.getWebImage(imageName);
 	}
@@ -84,8 +84,9 @@ public class WebController {
 
 	// 서비스 리스트 조회
 	@GetMapping("/web/service")
-	public Page<WebList> getService(@PageableDefault(size=16) Pageable pageable) {
-		return webService.selectWebAll(pageable);
+	public Page<WebList> getService(@PageableDefault(size=36) Pageable pageable) {
+		Page<WebList > weblists = webService.selectWebAll(pageable);
+		return weblists;
 //		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
