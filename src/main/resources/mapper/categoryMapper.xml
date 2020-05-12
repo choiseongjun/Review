@@ -6,7 +6,7 @@
 <mapper namespace="category">
        
        <select id="selectCategory" resultMap="subCategory">
-       	select id, name, parent, m_code from category where parent is null
+       	select id, name, parent, m_code from category where parent = 0
        </select>
        
        <select id="selectSubCategory" resultType="com.example.demo.domain.Category">
