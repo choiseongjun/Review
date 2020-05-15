@@ -34,9 +34,9 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public boolean editCategroy(CategoryReq categoryReq) {
+	public boolean editCategroy(Long id, CategoryReq categoryReq) {
 		try {
-			Optional<Category> category = categoryRepository.findById(categoryReq.getId());
+			Optional<Category> category = categoryRepository.findById(id);
 			
 			category.ifPresent(selectCategory -> {
 				selectCategory.setName(categoryReq.getName());
@@ -44,8 +44,25 @@ public class CategoryServiceImpl implements CategoryService {
 				selectCategory.setParent(categoryReq.getParent());
 				categoryRepository.save(selectCategory);
 			});
+			
 			return true;
 		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean deleteCategory(Long id) {
+		try {
+			Optional<Category> category = categoryRepository.findById(id);
+			
+			category.ifPresent(selectCategory -> {
+				categoryRepository.delete(selectCategory);
+			});
+			
+			return true; 
+		} catch(Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

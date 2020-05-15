@@ -3,7 +3,9 @@ package com.example.demo.controller.category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,13 +43,21 @@ public class CategoryController {
 		}
 	}
 	
-	@PutMapping("/category")
-	public ResponseEntity<?> editCategory(@RequestBody CategoryReq categoryReq) {
+	@PutMapping("/category/{id}")
+	public ResponseEntity<?> editCategory(@RequestBody CategoryReq categoryReq, @PathVariable Long id) {
 		try {
-			return new ResponseEntity<>(categoryService.editCategroy(categoryReq), HttpStatus.OK);
+			return new ResponseEntity<>(categoryService.editCategroy(id, categoryReq), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("Internal Server ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
+	
+	@DeleteMapping("category/{id}")
+	public ResponseEntity<?> deleteCategroy(@PathVariable Long id){
+		try {
+			return new ResponseEntity<>(categoryService.deleteCategory(id), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Internal Server ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

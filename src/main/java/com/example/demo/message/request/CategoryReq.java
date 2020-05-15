@@ -8,9 +8,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CategoryReq {
-	//카테고리 id
-	private Long id;
-	
 	//카테고리 이름
 	private String name;
 	
