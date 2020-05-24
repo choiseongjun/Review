@@ -46,12 +46,14 @@ public class WebController {
 
 	// 서비스 작성
 	@PostMapping("/web/service")
-	public Map<String, Object> insert(@RequestPart(name = "webList") WebList webList,
+	public Map<String, Object> insert(@RequestPart(name = "webList",required = false) WebList webList,
 			@RequestPart(name = "file", required = false) MultipartFile files, Principal principal) throws Exception {
 		String user_id = principal.getName();
+		System.out.println(webList.toString());
+		System.out.println(files.toString());
 		Map<String, Object> returnData = new HashMap<String, Object>();
 		try {
-			webService.insert(user_id, webList, files);
+			//webService.insert(user_id, webList, files);
 			returnData.put("code", "1");
 			returnData.put("message", "저장되었습니다");
 
