@@ -96,8 +96,9 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 			        webfile.setReal_name(originalFileName2);
 			        webfile.setFile_path(webImagePath);
 			        webfile.setWeblist(webList);
-			        webfileRepository.save(webfile);
+			      
 				}
+				  webfileRepository.save(webfile);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
