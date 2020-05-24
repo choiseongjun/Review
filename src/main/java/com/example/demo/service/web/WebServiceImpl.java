@@ -58,13 +58,12 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 
 	// 서비스 작성
 	@Override
-	public WebList insert(String user_id, WebList webList, MultipartFile file) {
+	public WebList insert(String user_id, WebList webList, MultipartFile file,List<MultipartFile> files2) {
 		Webfile webfile = new Webfile();
-
+		
 		Optional<User> user = userRepository.findByUserid(user_id);
-
-		webList.setUser(user.get());
-		webRepository.save(webList);
+		
+		
 		if (file != null) {
 			UUID uid = UUID.randomUUID();
 
@@ -77,11 +76,28 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 	        webList.setFile_name(savedName);
 	        webList.setReal_name(originalFileName);
 	        webList.setFile_path(webImagePath);
-
+	        webList.setUser(user.get());
+			webRepository.save(webList);
 			// 파일업로드
 			try {
 				fileManager.fileUpload(file, webImagePath + "/" + savedName);
 				webfileRepository.save(webfile);
+				
+				
+				for (MultipartFile filelists : files2) {
+					System.out.println(filelists.getOriginalFilename());
+					System.out.println(filelists.getName());
+					String originalFileName2 = filelists.getOriginalFilename();
+					String fileExtension2 = originalFileName2.substring(originalFileName2.lastIndexOf(".") + 1).toLowerCase();
+					String imageNAME2 = filelists.getName();
+					String savedName2 = uid.toString();// 랜덤아이디
+					webfile.setImageExtension(fileExtension2);
+					webfile.setFile_name(savedName2);
+			        webfile.setReal_name(originalFileName2);
+			        webfile.setFile_path(webImagePath);
+			        webfile.setWeblist(webList);
+			        webfileRepository.save(webfile);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -142,5 +158,6 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 		Page<WebListDto> weblists = webRepository.searchPage(pageable);
 		return weblists;
 	}
+
 
 }

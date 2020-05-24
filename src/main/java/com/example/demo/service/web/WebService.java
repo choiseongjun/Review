@@ -13,7 +13,7 @@ import com.example.demo.domain.WebListDto;
 public interface WebService {
 
    //서비스 작성
-   WebList insert(String user_id, WebList webList, MultipartFile files);
+   WebList insert(String user_id, WebList webList, MultipartFile files, List<MultipartFile> files2);
    
    //서비스 수정
    void update(long id, WebList webList);

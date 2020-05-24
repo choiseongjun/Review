@@ -49,15 +49,10 @@ public class WebController {
 	public Map<String, Object> insert(@RequestPart(name = "webList",required = false) WebList webList,
 			@RequestPart(name = "file", required = false) MultipartFile files,@RequestPart(name = "file2", required = false) List<MultipartFile> files2, Principal principal) throws Exception {
 		String user_id = principal.getName();
-		System.out.println(webList.toString());
-		System.out.println(files);
-		for (MultipartFile mf : files2) {
-			System.out.println(mf.getOriginalFilename());
-			System.out.println(mf.getName());
-		}
+		
 		Map<String, Object> returnData = new HashMap<String, Object>();
 		try {
-			//webService.insert(user_id, webList, files);
+			webService.insert(user_id, webList, files,files2);
 			returnData.put("code", "1");
 			returnData.put("message", "저장되었습니다");
 
