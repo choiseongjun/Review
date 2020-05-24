@@ -49,7 +49,9 @@ public class WebController {
 	public Map<String, Object> insert(@RequestPart(name = "webList",required = false) WebList webList,
 			@RequestPart(name = "file", required = false) MultipartFile files,@RequestPart(name = "file2", required = false) MultipartFile files2, Principal principal) throws Exception {
 		String user_id = principal.getName();
-		System.out.println(webList);
+		System.out.println(webList.toString());
+		System.out.println(files.toString());
+		System.out.println(files2.toString());
 		Map<String, Object> returnData = new HashMap<String, Object>();
 		try {
 			//webService.insert(user_id, webList, files);
