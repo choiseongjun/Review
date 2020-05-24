@@ -85,8 +85,6 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 				
 				
 				for (MultipartFile filelists : files2) {
-					System.out.println(filelists.getOriginalFilename());
-					System.out.println(filelists.getName());
 					String originalFileName2 = filelists.getOriginalFilename();
 					String fileExtension2 = originalFileName2.substring(originalFileName2.lastIndexOf(".") + 1).toLowerCase();
 					String imageNAME2 = filelists.getName();
@@ -96,9 +94,11 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 			        webfile.setReal_name(originalFileName2);
 			        webfile.setFile_path(webImagePath);
 			        webfile.setWeblist(webList);
-			      
+			        System.out.println(originalFileName2);
+			        webfileRepository.save(webfile);
 				}
-				  webfileRepository.save(webfile);
+				
+				  
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
