@@ -1,14 +1,15 @@
 package com.example.demo.service.web;
 
+import static com.example.demo.domain.QWebList.webList;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.persistence.Tuple;
 import javax.transaction.Transactional;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -28,10 +29,7 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.WebRepository;
 import com.example.demo.repository.WebfileRepository;
-import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.JPQLQuery;
-
-import static com.example.demo.domain.QWebList.*;
 
 @Service
 @Transactional
@@ -81,7 +79,7 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 			// 파일업로드
 			try {
 				fileManager.fileUpload(file, webImagePath + "/" + savedName);
-				webfileRepository.save(webfile);
+				
 				
 				
 				for (MultipartFile filelists : files2) {
@@ -94,10 +92,15 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 			        webfile.setReal_name(originalFileName2);
 			        webfile.setFile_path(webImagePath);
 			        webfile.setWeblist(webList);
-			        System.out.println(originalFileName2);
-			        webfileRepository.save(webfile);
+			        
+			        System.out.println("webfile2@#!@#");
+			        System.out.println(webfile.getReal_name());
+			        System.out.println("webfile2@#!@#");
+				    webfileRepository.save(webfile);
 				}
 				
+				
+				        
 				  
 			} catch (IOException e) {
 				e.printStackTrace();

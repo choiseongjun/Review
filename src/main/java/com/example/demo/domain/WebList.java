@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.example.demo.domain.common.DateAudit;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,10 +25,11 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "WEBLIST")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class WebList extends DateAudit{
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private long id;
 	
@@ -43,14 +46,19 @@ public class WebList extends DateAudit{
     //삭제여부
     @Column(name = "DELETE_YN",columnDefinition = "CHAR(1) default 'N'")
     private char deleteyn;
-    
-    //승인여부
+    //웹여부
+    @Column(name = "WEB_YN",columnDefinition = "CHAR(1) default 'N'")
+    private char web_yn;
+    //어플여부
     @Column(name = "APP_YN",columnDefinition = "CHAR(1) default 'N'")
-    private char appyn;
+    private char app_yn;
+    //승인여부
+    @Column(name = "GRANT_YN",columnDefinition = "CHAR(1) default 'N'")
+    private char grant_yn;
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
 	private List<WebReply> webreply;
-//	@OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
-//	private List<Webfile> webfile;
+	@OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
+	private List<Webfile> webfile;
     //사용자번호
     @ManyToOne(fetch = FetchType.LAZY,cascade={CascadeType.ALL})
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")

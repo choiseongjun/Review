@@ -36,7 +36,7 @@ public class User{
     private String userid;
 
     private String email;
-
+    @JsonIgnore
     @NotBlank
     private String password;
 
