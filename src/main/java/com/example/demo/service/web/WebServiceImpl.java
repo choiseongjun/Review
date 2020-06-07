@@ -57,7 +57,7 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 	// 서비스 작성
 	@Override
 	public WebList insert(String user_id, WebList webList, MultipartFile file,List<MultipartFile> files2) {
-		Webfile webfile = new Webfile();
+		
 		
 		Optional<User> user = userRepository.findByUserid(user_id);
 		
@@ -83,6 +83,7 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 				
 				
 				for (MultipartFile filelists : files2) {
+					Webfile webfile = new Webfile();
 					String originalFileName2 = filelists.getOriginalFilename();
 					String fileExtension2 = originalFileName2.substring(originalFileName2.lastIndexOf(".") + 1).toLowerCase();
 					String imageNAME2 = filelists.getName();
