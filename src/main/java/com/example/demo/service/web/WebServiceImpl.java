@@ -61,7 +61,9 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 		
 		Optional<User> user = userRepository.findByUserid(user_id);
 		
-		
+		/*
+		 * 파일이 있을경우
+		 * */
 		if (file != null) {
 			UUID uid = UUID.randomUUID();
 
@@ -79,33 +81,33 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 			// 파일업로드
 			try {
 				fileManager.fileUpload(file, webImagePath + "/" + savedName);
-				
-				
-				
-				for (MultipartFile filelists : files2) {
-					Webfile webfile = new Webfile();
-					String originalFileName2 = filelists.getOriginalFilename();
-					String fileExtension2 = originalFileName2.substring(originalFileName2.lastIndexOf(".") + 1).toLowerCase();
-					String imageNAME2 = filelists.getName();
-					String savedName2 = uid.toString();// 랜덤아이디
-					webfile.setImageExtension(fileExtension2);
-					webfile.setFile_name(savedName2);
-			        webfile.setReal_name(originalFileName2);
-			        webfile.setFile_path(webImagePath);
-			        webfile.setWeblist(webList);
-			        
-			        System.out.println("webfile2@#!@#");
-			        System.out.println(webfile.getReal_name());
-			        System.out.println("webfile2@#!@#");
-				    webfileRepository.save(webfile);
-				}
-				
-				
+				if(files2!=null) {
+					for (MultipartFile filelists : files2) {
+						
+						UUID uid2 = UUID.randomUUID();//랜덤uid2
+						Webfile webfile = new Webfile();
+						String originalFileName2 = filelists.getOriginalFilename();
+						String fileExtension2 = originalFileName2.substring(originalFileName2.lastIndexOf(".") + 1).toLowerCase();
+						//String imageNAME2 = filelists.getName();
+						String savedName2 = uid2.toString();// 랜덤아이디
+					
+						fileManager.fileUpload(filelists, webImagePath + "/" + savedName2);
+						
+						webfile.setImageExtension(fileExtension2);
+						webfile.setFile_name(savedName2);
+				        webfile.setReal_name(originalFileName2);
+				        webfile.setFile_path(webImagePath);
+				        webfile.setWeblist(webList);
 				        
-				  
+					    webfileRepository.save(webfile);
+					    
+					}
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}else {//파일이 없을경우!
+			webRepository.save(webList);
 		}
 
 		return webList;
