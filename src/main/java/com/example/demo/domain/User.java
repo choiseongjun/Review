@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -107,4 +108,9 @@ public class User{
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+	public void setId(Optional<Long> userid2) {
+		// TODO Auto-generated method stub
+		
+	}
 }
