@@ -28,7 +28,11 @@ spring:
     serialization:
                   WRITE_DATES_AS_TIMESTAMPS : false
                   FAIL_ON_EMPTY_BEANS : false
-                  
+  servlet:
+    multipart:
+      maxFileSize: 100MB
+      maxRequestSize: 100MB
+                        
 logging:
         level:
               com:
@@ -37,14 +41,6 @@ logging:
                           
 server:
     port: 8080
-    servlet:
-      multipart:
-        maxFileSize: 100MB
-        maxRequestSize: 100MB
-        cookie:
-          http-only: true
-        session:
-         tracking-modes: cookie
 
 webImagePath: /Users/choiseongjun/git/Review/image/
 app:
