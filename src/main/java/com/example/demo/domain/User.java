@@ -19,7 +19,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -48,7 +50,6 @@ public class User{
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "user",cascade = CascadeType.ALL)
-	@JsonIgnore
 	private List<WebList> weblist;
     
     public User() {}
@@ -109,8 +110,4 @@ public class User{
         this.roles = roles;
     }
 
-	public void setId(Optional<Long> userid2) {
-		// TODO Auto-generated method stub
-		
-	}
 }
