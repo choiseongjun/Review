@@ -11,27 +11,27 @@ import com.example.demo.domain.WebList;
 import com.example.demo.domain.WebReply;
 import com.example.demo.message.request.WebReplyReq;
 import com.example.demo.repository.ReplyRepository;
+import com.example.demo.repository.UserRepository;
 
 @Service
 public class WebReplyServiceImpl implements WebReplyService{
 
 	@Autowired
 	private ReplyRepository replyRepository;
+	@Autowired
+	UserRepository userRepository;
 	
-//	@Autowired
-//	private UserRepository userRepository;
 	
 	@Override
-	public WebReply saveReply(WebReplyReq webReplyReq) {
-		User user = new User();
-		user.setId(webReplyReq.getUser_id());
+	public WebReply saveReply(WebReplyReq webReplyReq,String user_id) {
+		Optional<User> user = userRepository.findByUserid(user_id);
 //		User user = userRepository.getOne(webReplyReq.getUser_id());
 		
 		WebList webList = new WebList();
 		webList.setId(webReplyReq.getWeblist_id());
 		
 		WebReply webReply = new WebReply();
-		webReply.setUser(user);
+		webReply.setUser(user.get());
 		webReply.setWeblist(webList);
 		webReply.setContent(webReplyReq.getContent());
 		webReply.setParent(webReplyReq.getParent());

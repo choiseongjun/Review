@@ -1,5 +1,7 @@
 package com.example.demo.controller.web;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +31,10 @@ public class WebReplyController {
 	 * @return : Reply
 	 * */	
 	@PostMapping("/reply")
-	public ResponseEntity<?> saveReply(@RequestBody WebReplyReq webReplyReq) {
+	public ResponseEntity<?> saveReply(@RequestBody WebReplyReq webReplyReq,Principal principal) {
 		try {
-			System.out.println(webReplyReq.getUser_id());
-			WebReply reply = webReplyService.saveReply(webReplyReq);
+			String user_id = principal.getName();
+			WebReply reply = webReplyService.saveReply(webReplyReq,user_id);
 			
 			return new ResponseEntity<>(reply, HttpStatus.OK);
 		} catch (Exception e) {
