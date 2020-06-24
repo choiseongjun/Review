@@ -36,7 +36,7 @@ public class WebReplyController {
 			String user_id = principal.getName();
 			System.out.println("user_id++="+user_id);
 			System.out.println("webReplyReq!!"+webReplyReq.toString());
-			//WebReply reply = webReplyService.saveReply(webReplyReq,user_id);
+			WebReply reply = webReplyService.saveReply(webReplyReq,user_id);
 			
 			return new ResponseEntity<>("", HttpStatus.OK);
 		} catch (Exception e) {

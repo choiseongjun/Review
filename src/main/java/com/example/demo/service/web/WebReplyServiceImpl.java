@@ -34,7 +34,7 @@ public class WebReplyServiceImpl implements WebReplyService{
 		webReply.setUser(user.get());
 		webReply.setWeblist(webList);
 		webReply.setContent(webReplyReq.getContent());
-		webReply.setParent(webReplyReq.getParent());
+		//webReply.setParent(webReplyReq.getParent());
 		webReply.setDeleteyn('N');
 		
 		WebReply reply = replyRepository.save(webReply);
