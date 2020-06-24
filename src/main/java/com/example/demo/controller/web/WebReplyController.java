@@ -36,7 +36,7 @@ public class WebReplyController {
 			String user_id = principal.getName();
 			WebReply reply = webReplyService.saveReply(webReplyReq,user_id);
 			
-			return new ResponseEntity<>("", HttpStatus.OK);
+			return new ResponseEntity<>(reply, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>("잘못된 요청입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
