@@ -44,12 +44,12 @@ public class WebReplyServiceImpl implements WebReplyService{
 
 	@Override
 	public List<WebReply> findAllReply(Long id) {
-		List<WebReply> replys = replyRepository.findAllByWeblist_id(id);
+		List<WebReply> replys = replyRepository.findAllByWeblist_idAndDeleteyn(id,'N');
 		return replys;
 	}
 
 	@Override
-	public boolean editReply(WebReplyReq webReplyReq) {
+	public boolean editReply(WebReplyReq webReplyReq,String user_id) {
 		try {
 			Optional<WebReply> reply = replyRepository.findById(webReplyReq.getId());
 			
@@ -66,9 +66,9 @@ public class WebReplyServiceImpl implements WebReplyService{
 	}
 
 	@Override
-	public boolean deleteReply(WebReplyReq webReplyReq) {
+	public boolean deleteReply(Long id) {
 		try {
-			Optional<WebReply> reply = replyRepository.findById(webReplyReq.getId());
+			Optional<WebReply> reply = replyRepository.findById(id);
 			
 			reply.ifPresent(selectReply -> {
 				selectReply.setDeleteyn('Y');

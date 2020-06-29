@@ -62,10 +62,11 @@ public class WebReplyController {
 	 * @param : WebReplyReq
 	 * @return : WebReply
 	 * */	
-	@PutMapping("/reply")
-	public ResponseEntity<?> editReply(@RequestBody WebReplyReq webReplyReq) {
+	@PutMapping(path = "/reply")
+	public ResponseEntity<?> editReply(@RequestBody WebReplyReq webReplyReq,Principal principal) {
 		try {
-			return new ResponseEntity<>(webReplyService.editReply(webReplyReq), HttpStatus.OK);
+			String user_id = principal.getName();
+			return new ResponseEntity<>(webReplyService.editReply(webReplyReq,user_id), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>("잘못된 요청입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -77,10 +78,11 @@ public class WebReplyController {
 	 * @param : WebReplyReq
 	 * @return : WebReply
 	 * */	
-	@DeleteMapping("/reply")
-	public ResponseEntity<?> deleteReply(@RequestBody WebReplyReq webReplyReq) {
+	@DeleteMapping("/reply/{id}")
+	public ResponseEntity<?> deleteReply(@PathVariable Long id,Principal principal) {
+		
 		try {
-			return new ResponseEntity<>(webReplyService.deleteReply(webReplyReq), HttpStatus.OK);
+			return new ResponseEntity<>(webReplyService.deleteReply(id), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>("잘못된 요청입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
