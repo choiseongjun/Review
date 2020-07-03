@@ -34,7 +34,7 @@ public class WebReply extends DateAudit{
     private String content;
     //별점
     @Column(name="STAR")
-    private double star;
+    private Double star;
     
     //부모키
     @Column(name = "PARENT")
