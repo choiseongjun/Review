@@ -32,6 +32,9 @@ public class WebReply extends DateAudit{
 	 //댓글 내용
     @Column(name = "CONTENT")
     private String content;
+    //별점
+    @Column(name="STAR")
+    private double star;
     
     //부모키
     @Column(name = "PARENT")

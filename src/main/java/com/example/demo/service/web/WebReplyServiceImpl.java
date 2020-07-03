@@ -33,6 +33,7 @@ public class WebReplyServiceImpl implements WebReplyService{
 		WebReply webReply = new WebReply();
 		webReply.setUser(user.get());
 		webReply.setWeblist(webList);
+		webReply.setStar(webReplyReq.getStar());
 		webReply.setContent(webReplyReq.getContent());
 //		webReply.setParent(webReplyReq.getParent());
 		webReply.setDeleteyn('N');
@@ -55,6 +56,7 @@ public class WebReplyServiceImpl implements WebReplyService{
 			
 			reply.ifPresent(selectReply -> {
 				selectReply.setContent(webReplyReq.getContent());
+				selectReply.setStar(webReplyReq.getStar());
 				replyRepository.save(selectReply);
 			});
 			

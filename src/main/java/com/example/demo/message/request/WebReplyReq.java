@@ -17,6 +17,9 @@ public class WebReplyReq {
 	//댓글 id
 	private Long id;
 	
+	//댓글 별점
+	private double star;
+	
 	//댓글 내용
 	private String content;
 	
