@@ -1,9 +1,10 @@
 package com.example.demo.service.web;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.User;
@@ -44,8 +45,8 @@ public class WebReplyServiceImpl implements WebReplyService{
 	}
 
 	@Override
-	public List<WebReply> findAllReply(Long id) {
-		List<WebReply> replys = replyRepository.findAllByWeblist_idAndDeleteyn(id,'N');
+	public Page<WebReply> findAllReply(Long id,Pageable pageable) {
+		Page<WebReply> replys = replyRepository.findAllByWeblist_idAndDeleteyn(id,'N',pageable);
 		return replys;
 	}
 

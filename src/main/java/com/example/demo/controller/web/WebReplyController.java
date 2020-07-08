@@ -2,7 +2,12 @@ package com.example.demo.controller.web;
 
 import java.security.Principal;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,10 +52,18 @@ public class WebReplyController {
 	 * 전체 댓글 조회
 	 * @return : List<Reply>
 	 * */	
-	@GetMapping("/reply/{weblist_id}")
-	public ResponseEntity<?> findAllReply(@PathVariable Long weblist_id) {
+	@SuppressWarnings("unchecked")
+	@GetMapping("/reply/{id}")
+	public ResponseEntity<?> findAllReply(@PathVariable Long id,Pageable pageable) {
+		//id==weblist_id
 		try {
-			return new ResponseEntity<>(webReplyService.findAllReply(weblist_id), HttpStatus.OK);
+			JSONObject returnData = new JSONObject();
+			int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
+	    	pageable = PageRequest.of(page, 10, Sort.by("id").descending());
+	    	Page<WebReply> webreply = webReplyService.findAllReply(id,pageable);
+	    	
+	    	returnData.put("webreply", webreply);
+			return new ResponseEntity<>(returnData, HttpStatus.OK);
 		} catch (Exception e){
 			e.printStackTrace();
 			return new ResponseEntity<>("잘못된 요청입니다." , HttpStatus.INTERNAL_SERVER_ERROR);
