@@ -13,16 +13,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.example.demo.domain.common.DateAudit;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter 
-@Setter
+@Data
 @Entity
 @Table(name = "WEBLIST")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
@@ -82,4 +83,9 @@ public class WebList extends DateAudit{
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "M_CODE")
     private Category category; 	
+    
+    @Transient
+    private Double avgstar;
+    @Transient
+    private long sizeOfstar;
 }

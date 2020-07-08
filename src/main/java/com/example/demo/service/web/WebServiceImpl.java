@@ -136,15 +136,15 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 	@Override
    public Page<WebList> selectWebAll(Pageable pageable) {
 	      
-	      final QWebList qWebList = webList;
-	      
-	      JPQLQuery query = from(webList);
-	    		  				
-	      List<WebList> webLists = getQuerydsl().applyPagination(pageable, query).fetch();
-	      
-	      long totalcount = query.fetchCount();
+//	      final QWebList qWebList = webList;
+//	      
+//	      JPQLQuery query = from(webList);
+//	    		  				
+//	      List<WebList> webLists = getQuerydsl().applyPagination(pageable, query).fetch();
+//	      
+//	      long totalcount = query.fetchCount();
 	        
-	      return new PageImpl<WebList>(webLists, pageable, totalcount);
+	      return webRepository.findAll(pageable);
 	}
 	
 	// 서비스 상세 조회
@@ -152,6 +152,16 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 	public WebList selectOne(long id) {
 		WebList webList = webRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("WebList", "id", id));
+		double avg=1;
+		long cnt=0;
+		double sum=0;
+		for(int i=0;i<webList.getWebreply().size();i++) {
+			sum+=webList.getWebreply().get(i).getStar();
+			cnt++;
+		}
+		avg=sum/cnt;
+		webList.setAvgstar(avg);
+		webList.setSizeOfstar(cnt);
 		return webList;
 	}
 

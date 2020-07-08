@@ -5,13 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +24,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.domain.User;
 import com.example.demo.domain.WebList;
-import com.example.demo.domain.WebListDto;
 import com.example.demo.service.category.CategoryService;
 import com.example.demo.service.web.WebFileService;
 import com.example.demo.service.web.WebService;
@@ -84,18 +81,22 @@ public class WebController {
 	}
 
 	// 서비스 리스트 조회
+	@SuppressWarnings("unchecked")
 	@GetMapping("/web/service")
-	public Page<WebList> getService(@PageableDefault(size=36) Pageable pageable) {
-		Page<WebList > weblists = webService.selectWebAll(pageable);
-		return weblists;
-//		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	public JSONObject getService(Pageable pageable,Sort sort) {
+		JSONObject returnData = new JSONObject();
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
+    	pageable = PageRequest.of(page, 16, Sort.by("id").descending());
+		Page<WebList> weblists = webService.selectWebAll(pageable);
+		returnData.put("weblists",weblists);
+		return returnData;
 	}
 	
 	// 서비스 리스트 조회
-	@GetMapping("/web/webList")
-	public Page<WebListDto> getWeblist(@PageableDefault(size=16) Pageable pageable) {
-		return webService.getWebLists(pageable);
-	}
+//	@GetMapping("/web/webList")
+//	public Page<WebListDto> getWeblist(@PageableDefault(size=16) Pageable pageable) {
+//		return webService.getWebLists(pageable);
+//	}
 
 	// 서비스 상세조회
 	@GetMapping("/web/service/{id}")
