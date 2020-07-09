@@ -88,4 +88,6 @@ public class WebList extends DateAudit{
     private Double avgstar;
     @Transient
     private long sizeOfstar;
+    @Transient
+    private String categoryname;
 }

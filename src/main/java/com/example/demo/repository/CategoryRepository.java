@@ -6,4 +6,6 @@ import com.example.demo.domain.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
+	Category findBymCode(String categoryname);
+
 }

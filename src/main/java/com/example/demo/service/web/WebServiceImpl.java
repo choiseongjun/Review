@@ -20,12 +20,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.common.FileManager;
+import com.example.demo.domain.Category;
 import com.example.demo.domain.QWebList;
 import com.example.demo.domain.User;
 import com.example.demo.domain.WebList;
 import com.example.demo.domain.WebListDto;
 import com.example.demo.domain.Webfile;
 import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.WebRepository;
 import com.example.demo.repository.WebfileRepository;
@@ -49,6 +51,9 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	CategoryRepository categoryRepository;
 
 	public WebServiceImpl() {
 		super(WebList.class);
@@ -64,9 +69,13 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 		/*
 		 * 파일이 있을경우
 		 * */
+		
 		if (file != null) {
 			UUID uid = UUID.randomUUID();
-
+			Category category = new Category();
+			category.setMCode(webList.getCategoryname());
+			webList.setUser(user.get());
+	        webList.setCategory(category);
 			// 이미지파일확장자추출
 			String originalFileName = file.getOriginalFilename();
 			String fileExtension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1).toLowerCase();
@@ -76,7 +85,7 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 	        webList.setFile_name(savedName);
 	        webList.setReal_name(originalFileName);
 	        webList.setFile_path(webImagePath);
-	        webList.setUser(user.get());
+	        
 			webRepository.save(webList);
 			// 파일업로드
 			try {
@@ -107,6 +116,9 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 				e.printStackTrace();
 			}
 		}else {//파일이 없을경우!
+			Category category = categoryRepository.findBymCode(webList.getCategoryname());
+			webList.setUser(user.get());
+	        webList.setCategory(category);
 			webRepository.save(webList);
 		}
 
