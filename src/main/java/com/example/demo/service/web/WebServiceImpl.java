@@ -155,8 +155,14 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 //	      List<WebList> webLists = getQuerydsl().applyPagination(pageable, query).fetch();
 //	      
 //	      long totalcount = query.fetchCount();
-	        
-	      return webRepository.findAll(pageable);
+//		  Category category = categoryRepository.findBymCode(mCode);
+//		  if(mCode.equals("All")) {
+//			  return webRepository.findAll(pageable);
+//		  }else {
+//			  
+//			  return webRepository.findAllByCategoryId(pageable,category.getId());
+//		  }
+		  return webRepository.findAll(pageable);
 	}
 	
 	// 서비스 상세 조회

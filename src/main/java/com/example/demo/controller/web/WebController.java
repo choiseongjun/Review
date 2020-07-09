@@ -82,13 +82,15 @@ public class WebController {
 
 	// 서비스 리스트 조회
 	@SuppressWarnings("unchecked")
-	@GetMapping("/web/service")
+	@GetMapping("/web/serviceList")
 	public JSONObject getService(Pageable pageable,Sort sort) {
 		JSONObject returnData = new JSONObject();
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
     	pageable = PageRequest.of(page, 16, Sort.by("id").descending());
-		Page<WebList> weblists = webService.selectWebAll(pageable);
-		returnData.put("weblists",weblists);
+    	
+    	Page<WebList> weblists = webService.selectWebAll(pageable);
+    	returnData.put("weblists",weblists);
+		
 		return returnData;
 	}
 	
