@@ -146,7 +146,7 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 
 	// 서비스 리스트 조회
 	@Override
-   public Page<WebList> selectWebAll(Pageable pageable) {
+   public Page<WebList> selectWebAll(Pageable pageable,String mCode) {
 	      
 //	      final QWebList qWebList = webList;
 //	      
@@ -155,14 +155,14 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 //	      List<WebList> webLists = getQuerydsl().applyPagination(pageable, query).fetch();
 //	      
 //	      long totalcount = query.fetchCount();
-//		  Category category = categoryRepository.findBymCode(mCode);
-//		  if(mCode.equals("All")) {
-//			  return webRepository.findAll(pageable);
-//		  }else {
-//			  
-//			  return webRepository.findAllByCategoryId(pageable,category.getId());
-//		  }
-		  return webRepository.findAll(pageable);
+		  Category category = categoryRepository.findBymCode(mCode);
+		  if(mCode.equals("All")) {
+			  return webRepository.findAll(pageable);
+		  }else {
+			  
+			  return webRepository.findAllByCategoryId(pageable,category.getId());
+		  }
+//		  return webRepository.findAll(pageable);
 	}
 	
 	// 서비스 상세 조회

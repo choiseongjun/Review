@@ -90,4 +90,6 @@ public class WebList extends DateAudit{
     private long sizeOfstar;
     @Transient
     private String categoryname;
+    @Transient
+    private String mcode;//카테고리임시코드
 }
