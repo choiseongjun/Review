@@ -1,13 +1,10 @@
 package com.example.demo.controller.web;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,13 +51,13 @@ public class WebReplyController {
 	 * */	
 	@SuppressWarnings("unchecked")
 	@GetMapping("/reply/{id}")
-	public ResponseEntity<?> findAllReply(@PathVariable Long id,Pageable pageable) {
+	public ResponseEntity<?> findAllReply(@PathVariable Long id) {
 		//id==weblist_id
 		try {
 			JSONObject returnData = new JSONObject();
-			int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
-	    	pageable = PageRequest.of(page, 10, Sort.by("id").descending());
-	    	Page<WebReply> webreply = webReplyService.findAllReply(id,pageable);
+//			int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
+//	    	pageable = PageRequest.of(page, 10, Sort.by("id").descending());
+	    	List<WebReply> webreply = webReplyService.findAllReply(id);
 	    	
 	    	returnData.put("webreply", webreply);
 			return new ResponseEntity<>(returnData, HttpStatus.OK);

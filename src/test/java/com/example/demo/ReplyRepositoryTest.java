@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.example.demo.domain.User;
+import com.example.demo.domain.WebList;
 import com.example.demo.domain.WebReply;
 import com.example.demo.repository.ReplyRepository;
 
@@ -21,48 +23,58 @@ public class ReplyRepositoryTest {
 	private ReplyRepository replyRepository;
 	
 	@Test
-	@Ignore
 	public void createReplyTest() {
+		
+		User user=new User();
+		user.setId(1L);
+		
+		WebList weblist=new WebList();
+		weblist.setId(4L);
+		
 		WebReply wreply = new WebReply();
 		
-		wreply.setContent("댓글 테스트 중입니다.");
-		wreply.setParent("0");
-		wreply.setDepth("0");
-		wreply.setReplyorder("0");
+		for(long i=115;i<215;i++) {
+			wreply.setId(i);
+			wreply.setContent("댓글 테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트.");
+			wreply.setStar(4d);
+			wreply.setUser(user);
+			wreply.setWeblist(weblist);
+			replyRepository.save(wreply);
+		}
 		
-		replyRepository.save(wreply);
+		
 	}
 	
 	
-	@Test
-	@Ignore
-	public void readReplyTest() {
-		Optional<WebReply> reply = replyRepository.findById(id);
-		
-		reply.ifPresent(selectReply -> {
-			System.out.println(selectReply);
-		});
-	}
-	
-	@Test
-	@Ignore
-	public void updateReplyTest() {
-		Optional<WebReply> reply = replyRepository.findById(id);
-		
-		reply.ifPresent(selectReply -> {
-			selectReply.setContent("댓글 update Test 입니다.");
-			replyRepository.save(selectReply);
-		});
-	}
-	
-	@Test
-//	@Ignore 
-	public void deleteReplyTest() {
-		Optional<WebReply> reply = replyRepository.findById(id);
-		
-		reply.ifPresent(selectReply -> {
-			replyRepository.delete(selectReply);
-		});
-	}
+//	@Test
+//	@Ignore
+//	public void readReplyTest() {
+//		Optional<WebReply> reply = replyRepository.findById(id);
+//		
+//		reply.ifPresent(selectReply -> {
+//			System.out.println(selectReply);
+//		});
+//	}
+//	
+//	@Test
+//	@Ignore
+//	public void updateReplyTest() {
+//		Optional<WebReply> reply = replyRepository.findById(id);
+//		
+//		reply.ifPresent(selectReply -> {
+//			selectReply.setContent("댓글 update Test 입니다.");
+//			replyRepository.save(selectReply);
+//		});
+//	}
+//	
+//	@Test
+////	@Ignore 
+//	public void deleteReplyTest() {
+//		Optional<WebReply> reply = replyRepository.findById(id);
+//		
+//		reply.ifPresent(selectReply -> {
+//			replyRepository.delete(selectReply);
+//		});
+//	}
 
 }

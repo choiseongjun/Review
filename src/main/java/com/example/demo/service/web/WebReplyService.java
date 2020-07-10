@@ -10,7 +10,7 @@ import com.example.demo.message.request.WebReplyReq;
 
 public interface WebReplyService {
 	WebReply saveReply(WebReplyReq webReplyReq, String user_id);
-	Page<WebReply> findAllReply(Long id, Pageable pageable);
+	List<WebReply> findAllReply(Long id);
 	boolean editReply(WebReplyReq webReplyReq, String user_id);
 	boolean deleteReply(Long id);
 }

@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.example.demo.domain.common.DateAudit;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -56,8 +57,10 @@ public class WebList extends DateAudit{
     //승인여부
     @Column(name = "GRANT_YN",columnDefinition = "CHAR(1) default 'N'")
     private char grant_yn;
+    @JsonBackReference//웹리플라이는 안불러옴
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
 	private List<WebReply> webreply;
+    
 	@OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
 	private List<Webfile> webfile;
     //사용자번호

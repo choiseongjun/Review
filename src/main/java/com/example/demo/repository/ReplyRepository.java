@@ -13,7 +13,9 @@ import com.example.demo.domain.WebReply;
 public interface ReplyRepository extends JpaRepository<WebReply, Long> {
 	List<WebReply> findAllByWeblist_id(Long id);
 
-	List<WebReply> findAllByWeblist_idAndDeleteyn(Long id, char c);
-
 	Page<WebReply> findAllByWeblist_idAndDeleteyn(Long id, char c, Pageable pageable);
+
+	List<WebReply> findAllByWeblistAndDeleteyn(Long id, char c);
+
+	List<WebReply> findAllByWeblistIdAndDeleteyn(Long id, char c);
 }
