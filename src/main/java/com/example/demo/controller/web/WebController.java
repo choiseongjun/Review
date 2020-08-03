@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -83,12 +85,13 @@ public class WebController {
 	// 서비스 리스트 조회
 	@SuppressWarnings("unchecked")
 	@GetMapping("/web/serviceList/{mCode}")
-	public JSONObject getService(Pageable pageable,Sort sort,@PathVariable("mCode") String mCode) {
+	public JSONObject getService(Pageable pageable,Sort sort
+			,@RequestParam(value ="searchParam",required = false) String searchParam,@PathVariable("mCode") String mCode) {
 		JSONObject returnData = new JSONObject();
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
     	pageable = PageRequest.of(page, 16, Sort.by("id").descending());
     	
-    	Page<WebList> weblists = webService.selectWebAll(pageable,mCode);
+    	Page<WebList> weblists = webService.selectWebAll(pageable,mCode,searchParam);
     	
     	returnData.put("weblists",weblists);
     	returnData.put("mCode",mCode);

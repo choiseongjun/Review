@@ -25,7 +25,7 @@ public interface WebService {
    WebList selectOne(long id);
    
    //서비스 리스트 조회
-   Page<WebList> selectWebAll(Pageable pageable, String mCode);
+   Page<WebList> selectWebAll(Pageable pageable, String mCode, String searchParam);
 
    byte[] getWebImage(String imageName) throws Exception;
    
