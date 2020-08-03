@@ -156,7 +156,7 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 //	      
 //	      long totalcount = query.fetchCount();
 		Category category = categoryRepository.findBymCode(mCode);
-		if(searchParam.equals("")) {
+		if(searchParam==null) {
 			if(mCode.equals("All")) {
 				  return webRepository.findAll(pageable);
 			  }else {
