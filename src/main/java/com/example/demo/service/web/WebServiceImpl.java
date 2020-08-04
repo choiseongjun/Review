@@ -146,7 +146,7 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 
 	// 서비스 리스트 조회
 	@Override
-   public Page<WebList> selectWebAll(Pageable pageable,String mCode,String searchParam) {
+   public Page<WebList> selectWebAll(Pageable pageable,String mCode,String searchParam,String appYn) {
 	      
 //	      final QWebList qWebList = webList;
 //	      
@@ -156,19 +156,26 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 //	      
 //	      long totalcount = query.fetchCount();
 		Category category = categoryRepository.findBymCode(mCode);
-		if(searchParam==null) {
+		if(appYn!=null) {
 			if(mCode.equals("All")) {
-				  return webRepository.findAll(pageable);
-			  }else {
-				  return webRepository.findAllByCategoryId(pageable,category.getId());
-			  }	
+				return webRepository.findAllByAppyn(pageable,'Y');
+			} 
 		}else {
-			 if(mCode.equals("All")) {
-				  return webRepository.findAllByTitleLike(pageable,"%"+searchParam+"%");
-			  }else {
-				  return webRepository.findAllByCategoryIdAndTitleLike(pageable,category.getId(),searchParam);
-			  }	
+			if(searchParam==null) {
+				if(mCode.equals("All")) {
+					return webRepository.findAllByAppyn(pageable,'N');
+				}else {
+					return webRepository.findAllByCategoryIdAndAppyn(pageable,category.getId(),'N');
+				}	
+			}else {
+				if(mCode.equals("All")) {
+					return webRepository.findAllByTitleLikeAndAppyn(pageable,"%"+searchParam+"%",'N');
+				}else {
+					return webRepository.findAllByCategoryIdAndTitleLikeAndAppyn(pageable,category.getId(),searchParam,'N');
+				}	
+			}
 		}
+		return null;
 		  
 		 
 //		  return webRepository.findAll(pageable);

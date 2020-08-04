@@ -19,4 +19,12 @@ public interface WebRepository extends JpaRepository<WebList, Long>, WebReposito
 
 	Page<WebList> findAllByCategoryIdAndTitleLike(Pageable pageable, Long id, String searchParam);
 
+	Page<WebList> findAllByAppyn(Pageable pageable, char c);
+
+	Page<WebList> findAllByCategoryIdAndAppyn(Pageable pageable, Long id, char c);
+
+	Page<WebList> findAllByTitleLikeAndAppyn(Pageable pageable, String string, char c);
+
+	Page<WebList> findAllByCategoryIdAndTitleLikeAndAppyn(Pageable pageable, Long id, String searchParam, char c);
+
 }

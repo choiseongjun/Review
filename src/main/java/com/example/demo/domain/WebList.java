@@ -50,13 +50,13 @@ public class WebList extends DateAudit{
     private char deleteyn;
     //웹여부
     @Column(name = "WEB_YN",columnDefinition = "CHAR(1) default 'N'")
-    private char web_yn;
+    private char webyn;
     //어플여부
     @Column(name = "APP_YN",columnDefinition = "CHAR(1) default 'N'")
-    private char app_yn;
+    private char appyn;
     //승인여부
     @Column(name = "GRANT_YN",columnDefinition = "CHAR(1) default 'N'")
-    private char grant_yn;
+    private char grantyn;
     @JsonBackReference//웹리플라이는 안불러옴
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval=true,mappedBy = "weblist")
 	private List<WebReply> webreply;
