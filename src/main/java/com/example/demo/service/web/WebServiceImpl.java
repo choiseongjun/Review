@@ -187,6 +187,10 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 			cnt++;
 		}
 		avg=sum/cnt;
+		
+		if(Double.isNaN(avg)) {//NaN체크
+			avg=0;
+		}
 		webList.setAvgstar(avg);
 		webList.setSizeOfstar(cnt);
 		return webList;
