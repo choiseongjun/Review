@@ -46,7 +46,7 @@ public class WebReplyServiceImpl implements WebReplyService{
 
 	@Override
 	public List<WebReply> findAllReply(Long id) {
-		List<WebReply> replys = replyRepository.findAllByWeblistIdAndDeleteynOrderByIdAsc(id,'N');
+		List<WebReply> replys = replyRepository.findAllByWeblistIdAndDeleteynOrderByIdDesc(id,'N');
 		return replys;
 	}
 

@@ -1,9 +1,6 @@
 package com.example.demo.service.web;
 
-import static com.example.demo.domain.QWebList.webList;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,7 +10,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Service;
@@ -21,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.common.FileManager;
 import com.example.demo.domain.Category;
-import com.example.demo.domain.QWebList;
 import com.example.demo.domain.User;
 import com.example.demo.domain.WebList;
 import com.example.demo.domain.WebListDto;
@@ -31,7 +26,6 @@ import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.WebRepository;
 import com.example.demo.repository.WebfileRepository;
-import com.querydsl.jpa.JPQLQuery;
 
 @Service
 @Transactional
@@ -212,6 +206,24 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 	public Page<WebListDto> getWebLists(Pageable pageable) {
 		Page<WebListDto> weblists = webRepository.searchPage(pageable);
 		return weblists;
+	}
+
+	@Override
+	public void webAppyn(long id) {
+
+		Optional<WebList> webList = webRepository.findById(id);
+		
+		webList.ifPresent(selectList -> {
+			selectList.setAppyn('Y');
+			webRepository.save(selectList);
+		});
+		
+//		.orElseThrow(() -> new ResourceNotFoundException("WebList", "id", id));
+//		webListupdate.setTitle(webList.getTitle());
+//		webListupdate.setContent(webList.getContent());
+//		webListupdate.setUrl(webList.getUrl());
+//
+		
 	}
 
 

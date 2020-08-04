@@ -30,5 +30,7 @@ public interface WebService {
    byte[] getWebImage(String imageName) throws Exception;
    
    Page<WebListDto> getWebLists(Pageable pageable);
+   
+   void webAppyn(long id);
 
 }

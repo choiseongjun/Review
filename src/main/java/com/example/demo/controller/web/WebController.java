@@ -46,7 +46,9 @@ public class WebController {
 	// 서비스 작성
 	@PostMapping(path="/web/service")
 	public Map<String, Object> insert(@RequestPart(name = "webList",required = false) WebList webList,
-			@RequestPart(name = "file", required = false) MultipartFile files,@RequestPart(name = "file2", required = false) List<MultipartFile> files2, Principal principal) throws Exception {
+			@RequestPart(name = "file", required = false) MultipartFile files
+			,@RequestPart(name = "file2", required = false) List<MultipartFile> files2
+			,Principal principal) throws Exception {
 		String user_id = principal.getName();
 		
 		Map<String, Object> returnData = new HashMap<String, Object>();
@@ -120,5 +122,10 @@ public class WebController {
 		return new ResponseEntity<>(categoryService.selectCategory(), HttpStatus.OK);
 
 	}
-
+	@PutMapping("/web/service/appyn/{id}")
+	public ResponseEntity<?> webAppyn(@PathVariable("id") long id
+			,Principal principal) {
+		webService.webAppyn(id);
+		return new ResponseEntity<>("", HttpStatus.OK);
+	}
 }
