@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.User;
@@ -45,7 +46,7 @@ public class WebReplyServiceImpl implements WebReplyService{
 
 	@Override
 	public List<WebReply> findAllReply(Long id) {
-		List<WebReply> replys = replyRepository.findAllByWeblistIdAndDeleteyn(id,'N');
+		List<WebReply> replys = replyRepository.findAllByWeblistIdAndDeleteynOrderByIdAsc(id,'N');
 		return replys;
 	}
 
