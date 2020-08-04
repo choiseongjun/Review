@@ -1,6 +1,9 @@
 package com.example.demo.controller.user;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -11,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -52,7 +56,7 @@ public class AuthRestAPIs {
     JwtProvider jwtProvider;
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
+    public ResponseEntity<Map<String, String>> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -63,8 +67,12 @@ public class AuthRestAPIs {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String ROLE=auth.getAuthorities().toString();
+		Map<String, String> map =new HashMap<String, String>();
         String jwt = jwtProvider.generateJwtToken(authentication);
-        return ResponseEntity.ok(new JwtResponse(jwt));
+        map.put("ROLE", ROLE);
+		map.put("jwt", jwt);
+        return ResponseEntity.ok(map);
     }
 
     @PostMapping("/signup")
