@@ -30,7 +30,6 @@ public class WebReplyServiceImpl implements WebReplyService{
 		
 		WebList webList = new WebList();
 		webList.setId(webReplyReq.getWeblist_id());
-		System.out.println(webReplyReq.getWeblist_id());
 		WebReply webReply = new WebReply();
 		webReply.setUser(user.get());
 		webReply.setWeblist(webList);

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -92,7 +91,6 @@ public class WebReplyController {
 	 * */	
 	@DeleteMapping("/reply/{id}")
 	public ResponseEntity<?> deleteReply(@PathVariable Long id,Principal principal) {
-		
 		try {
 			return new ResponseEntity<>(webReplyService.deleteReply(id), HttpStatus.OK);
 		} catch (Exception e) {

@@ -11,10 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,16 +45,16 @@ public class WebController {
 	CategoryService categoryService;
 
 	// 서비스 작성
-	@PostMapping(path="/web/service")
-	public Map<String, Object> insert(@RequestPart(name = "webList",required = false) WebList webList,
-			@RequestPart(name = "file", required = false) MultipartFile files
-			,@RequestPart(name = "file2", required = false) List<MultipartFile> files2
-			,Principal principal) throws Exception {
+	@PostMapping(path = "/web/service")
+	public Map<String, Object> insert(@RequestPart(name = "webList", required = false) WebList webList,
+			@RequestPart(name = "file", required = false) MultipartFile files,
+			@RequestPart(name = "file2", required = false) List<MultipartFile> files2, Principal principal)
+			throws Exception {
 		String user_id = principal.getName();
-		
+
 		Map<String, Object> returnData = new HashMap<String, Object>();
 		try {
-			webService.insert(user_id, webList, files,files2);
+			webService.insert(user_id, webList, files, files2);
 			returnData.put("code", "1");
 			returnData.put("message", "저장되었습니다");
 
@@ -87,21 +88,23 @@ public class WebController {
 	// 서비스 리스트 조회
 	@SuppressWarnings("unchecked")
 	@GetMapping("/web/serviceList/{mCode}")
-	public JSONObject getService(Pageable pageable,Sort sort,@RequestParam(value ="appYn",required = false) String appYn
-			,@RequestParam(value ="searchParam",required = false) String searchParam,@PathVariable("mCode") String mCode) {
+	public JSONObject getService(Pageable pageable, Sort sort,
+			@RequestParam(value = "appYn", required = false) String appYn,
+			@RequestParam(value = "searchParam", required = false) String searchParam,
+			@PathVariable("mCode") String mCode) {
 
-			
 		JSONObject returnData = new JSONObject();
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
-    	pageable = PageRequest.of(page, 16, Sort.by("id").descending());
-    	
-    	Page<WebList> weblists = webService.selectWebAll(pageable,mCode,searchParam,appYn);
-    	
-    	returnData.put("weblists",weblists);
-    	returnData.put("mCode",mCode);
+		pageable = PageRequest.of(page, 16, Sort.by("id").descending());
+
+		Page<WebList> weblists = webService.selectWebAll(pageable, mCode, searchParam, appYn);
+
+		returnData.put("weblists", weblists);
+		returnData.put("mCode", mCode);
+		returnData.put("appYn", appYn);
 		return returnData;
 	}
-	
+
 	// 서비스 리스트 조회
 //	@GetMapping("/web/webList")
 //	public Page<WebListDto> getWeblist(@PageableDefault(size=16) Pageable pageable) {
@@ -122,10 +125,18 @@ public class WebController {
 		return new ResponseEntity<>(categoryService.selectCategory(), HttpStatus.OK);
 
 	}
-	@PutMapping("/web/service/appyn/{id}")
-	public ResponseEntity<?> webAppyn(@PathVariable("id") long id
-			,Principal principal) {
-		webService.webAppyn(id);
-		return new ResponseEntity<>("", HttpStatus.OK);
+
+	@DeleteMapping("/web/appyn/{id}")
+	public ResponseEntity<?> webAppyn(@PathVariable("id") long id) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Map<String, String> map=new HashMap<String, String>();
+		String ROLE_ADMIN="[ROLE_ADMIN]";
+		if(authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+			webService.webAppyn(id);
+			map.put("success", "success");
+			return new ResponseEntity<>(map, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("fail", HttpStatus.FORBIDDEN);
+		}
 	}
 }
