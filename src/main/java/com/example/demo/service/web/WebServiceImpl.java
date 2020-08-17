@@ -153,7 +153,9 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 		if(appYn!=null) {
 			if(mCode.equals("All")) {
 				return webRepository.findAllByAppyn(pageable,'Y');
-			} 
+			}else {
+				return webRepository.findAllByCategoryIdAndAppyn(pageable,category.getId(),'Y');
+			}
 		}else {
 			if(searchParam==null) {
 				if(mCode.equals("All")) {
@@ -169,8 +171,6 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 				}	
 			}
 		}
-		return null;
-		  
 		 
 //		  return webRepository.findAll(pageable);
 	}

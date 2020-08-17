@@ -93,12 +93,15 @@ public class WebController {
 			@RequestParam(value = "searchParam", required = false) String searchParam,
 			@PathVariable("mCode") String mCode) {
 
+		
+		
+		
 		JSONObject returnData = new JSONObject();
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
 		pageable = PageRequest.of(page, 16, Sort.by("id").descending());
 
 		Page<WebList> weblists = webService.selectWebAll(pageable, mCode, searchParam, appYn);
-
+		
 		returnData.put("weblists", weblists);
 		returnData.put("mCode", mCode);
 		returnData.put("appYn", appYn);
