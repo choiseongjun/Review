@@ -150,11 +150,19 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 //	      
 //	      long totalcount = query.fetchCount();
 		Category category = categoryRepository.findBymCode(mCode);
-		if(appYn!=null) {
-			if(mCode.equals("All")) {
-				return webRepository.findAllByAppyn(pageable,'Y');
-			}else {
-				return webRepository.findAllByCategoryIdAndAppyn(pageable,category.getId(),'Y');
+		if(appYn.equals("Y")) {//승인된 조건
+			if(searchParam==null) {//검색조건이 없는경우
+				if(mCode.equals("All")) {
+					return webRepository.findAllByAppyn(pageable,'Y');
+				}else {
+					return webRepository.findAllByCategoryIdAndAppyn(pageable,category.getId(),'Y');
+				}
+			}else {//검색조건이 있는경우
+				if(mCode.equals("All")) {
+					return webRepository.findAllByTitleLikeAndAppyn(pageable,"%"+searchParam+"%",'Y');
+				}else {
+					return webRepository.findAllByCategoryIdAndTitleLikeAndAppyn(pageable,category.getId(),searchParam,'Y');
+				}	
 			}
 		}else {
 			if(searchParam==null) {
@@ -171,8 +179,6 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 				}	
 			}
 		}
-		 
-//		  return webRepository.findAll(pageable);
 	}
 	
 	// 서비스 상세 조회
