@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -183,9 +184,25 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 	
 	// 서비스 상세 조회
 	@Override
-	public WebList selectOne(long id) {
+	public WebList selectOne(long id,HttpSession session) {
 		WebList webList = webRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("WebList", "id", id));
+		
+		long update_time=0;
+		if(session.getAttribute("update_time_"+id)!=null) {
+			//최근에 조회수를 올린 시간
+			update_time=(long)session.getAttribute("update_time_"+id);
+		}
+		long current_time=System.currentTimeMillis();
+		//일정 시간이 경과한 후 조회수 증가 처리
+		if(current_time - update_time > 60*1000) {
+			//조회수 증가 처리 뒤에 밀리 세컨드 60*60*1000 한시간 *24 == 하루
+			webList.setViews(webList.getViews()+1);
+			webRepository.save(webList);
+			//조회수를 올린 시간 저장
+			session.setAttribute("update_time_"+id, current_time);
+		}
+		
 		double avg=1;
 		long cnt=0;
 		double sum=0;
@@ -231,6 +248,8 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 //
 		
 	}
+
+	
 
 
 }

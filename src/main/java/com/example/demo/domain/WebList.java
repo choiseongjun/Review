@@ -82,7 +82,9 @@ public class WebList extends DateAudit{
 	
 	@Column(name = "IMAGEEXTENSION")
 	private String ImageExtension;
-	 //카테고리
+	@Column(name="VIEWS",columnDefinition = "BIGINT default 0")//조회수
+	private long views=0;
+	//카테고리
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "M_CODE")
     private Category category; 	

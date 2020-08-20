@@ -2,6 +2,8 @@ package com.example.demo.service.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +24,7 @@ public interface WebService {
    void delete(long id);
    
    //서비스 상세 조회
-   WebList selectOne(long id);
+   WebList selectOne(long id, HttpSession session);
    
    //서비스 리스트 조회
    Page<WebList> selectWebAll(Pageable pageable, String mCode, String searchParam, String appYn);

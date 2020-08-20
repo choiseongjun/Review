@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -92,9 +98,6 @@ public class WebController {
 			@RequestParam(value = "appYn", required = false) String appYn,
 			@RequestParam(value = "searchParam", required = false) String searchParam,
 			@PathVariable("mCode") String mCode) {
-
-		
-		
 		
 		JSONObject returnData = new JSONObject();
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
@@ -116,11 +119,14 @@ public class WebController {
 
 	// 서비스 상세조회
 	@GetMapping("/web/service/{id}")
-	public ResponseEntity<?> selectOne(@PathVariable("id") long id) {
-		WebList weblist = webService.selectOne(id);
+	public ResponseEntity<?> selectOne(@PathVariable("id") long id
+			,HttpServletRequest request,HttpServletResponse response
+			,HttpSession session) {
+		
+		WebList weblist = webService.selectOne(id,session);
 		return new ResponseEntity<>(weblist, HttpStatus.OK);
 	}
-
+	
 	// 주제(카테고리 조회)
 	@GetMapping("/web/{category_id}")
 	public ResponseEntity<?> selectTopic(@PathVariable("category_id") long id) {
