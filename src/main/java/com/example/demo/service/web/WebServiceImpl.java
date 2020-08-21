@@ -195,7 +195,7 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 		}
 		long current_time=System.currentTimeMillis();
 		//일정 시간이 경과한 후 조회수 증가 처리
-		if(current_time - update_time > 60*1000) {
+		if(current_time - update_time > 24*60*60*1000) {
 			//조회수 증가 처리 뒤에 밀리 세컨드 60*60*1000 한시간 *24 == 하루
 			webList.setViews(webList.getViews()+1);
 			webRepository.save(webList);

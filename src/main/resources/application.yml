@@ -1,5 +1,4 @@
 spring:
-
   freemarker:
     cache: false
   devtools:
@@ -31,7 +30,7 @@ spring:
   servlet:
     multipart:
       maxFileSize: 100MB
-      maxRequestSize: 100MB
+      maxRequestSize: 100MB  session:    timeout: 86400100
                         
 logging:
         level:
