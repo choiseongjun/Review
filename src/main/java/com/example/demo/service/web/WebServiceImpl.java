@@ -168,15 +168,15 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 		}else {
 			if(searchParam==null) {
 				if(mCode.equals("All")) {
-					return webRepository.findAllByAppyn(pageable,'N');
+					return webRepository.findAllByAppyn(pageable,'Y');
 				}else {
-					return webRepository.findAllByCategoryIdAndAppyn(pageable,category.getId(),'N');
+					return webRepository.findAllByCategoryIdAndAppyn(pageable,category.getId(),'Y');
 				}	
 			}else {
 				if(mCode.equals("All")) {
-					return webRepository.findAllByTitleLikeAndAppyn(pageable,"%"+searchParam+"%",'N');
+					return webRepository.findAllByTitleLikeAndAppyn(pageable,"%"+searchParam+"%",'Y');
 				}else {
-					return webRepository.findAllByCategoryIdAndTitleLikeAndAppyn(pageable,category.getId(),searchParam,'N');
+					return webRepository.findAllByCategoryIdAndTitleLikeAndAppyn(pageable,category.getId(),searchParam,'Y');
 				}	
 			}
 		}
