@@ -30,7 +30,8 @@ spring:
   servlet:
     multipart:
       maxFileSize: 100MB
-      maxRequestSize: 100MB  session:    timeout: 86400000
+      maxRequestSize: 100MB
+        session:    timeout: 86400000
                         
 logging:
         level:
