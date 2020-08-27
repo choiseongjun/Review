@@ -21,7 +21,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,12 +30,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.domain.VisitCheck;
 import com.example.demo.domain.WebList;
+import com.example.demo.repository.VisitcheckRepository;
 import com.example.demo.service.category.CategoryService;
 import com.example.demo.service.web.WebFileService;
 import com.example.demo.service.web.WebService;
+
 
 @RestController
 public class WebController {
@@ -49,7 +53,8 @@ public class WebController {
 
 	@Autowired
 	CategoryService categoryService;
-
+	@Autowired
+	VisitcheckRepository visitcheckRepository;
 	// 서비스 작성
 	@PostMapping(path = "/web/service")
 	public Map<String, Object> insert(@RequestPart(name = "webList", required = false) WebList webList,
@@ -57,7 +62,7 @@ public class WebController {
 			@RequestPart(name = "file2", required = false) List<MultipartFile> files2, Principal principal)
 			throws Exception {
 		String user_id = principal.getName();
-
+		System.out.println(webList);
 		Map<String, Object> returnData = new HashMap<String, Object>();
 		try {
 			webService.insert(user_id, webList, files, files2);
@@ -99,6 +104,14 @@ public class WebController {
 			@RequestParam(value = "searchParam", required = false) String searchParam,
 			@PathVariable("mCode") String mCode) {
 		
+		if(mCode.equals("All") && pageable.getPageNumber()==1) {//방문자체크 메소드
+			VisitCheck vo=new VisitCheck();
+			try {
+				insertVisitor(vo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		JSONObject returnData = new JSONObject();
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
 		pageable = PageRequest.of(page, 16, Sort.by("id").descending());
@@ -110,17 +123,19 @@ public class WebController {
 		returnData.put("appYn", appYn);
 		return returnData;
 	}
+	//방문자체크 메서드
+	public VisitCheck insertVisitor(VisitCheck vo) throws Exception{
+        HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+        vo.setVisit_ip(req.getRemoteAddr());
+        vo.setVisit_agent(req.getHeader("User-Agent"));//브라우저 정보
+        vo.setVisit_refer(req.getHeader("referer"));//접속 전 사이트 정보
+        return visitcheckRepository.save(vo);
+    }
 
-	// 서비스 리스트 조회
-//	@GetMapping("/web/webList")
-//	public Page<WebListDto> getWeblist(@PageableDefault(size=16) Pageable pageable) {
-//		return webService.getWebLists(pageable);
-//	}
 
 	// 서비스 상세조회
 	@GetMapping("/web/service/{id}")
 	public ResponseEntity<?> selectOne(@PathVariable("id") long id
-			,HttpServletRequest request,HttpServletResponse response
 			,HttpSession session) {
 		
 		WebList weblist = webService.selectOne(id,session);

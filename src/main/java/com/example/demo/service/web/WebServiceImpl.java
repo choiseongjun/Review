@@ -60,15 +60,13 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 		
 		
 		Optional<User> user = userRepository.findByUserid(user_id);
-		
+		Category category = categoryRepository.findBymCode(webList.getMcode());
 		/*
 		 * 파일이 있을경우
 		 * */
-		
+		webList.setDeleteyn('N');
 		if (file != null) {
 			UUID uid = UUID.randomUUID();
-			Category category = new Category();
-			category.setMCode(webList.getCategoryname());
 			webList.setUser(user.get());
 	        webList.setCategory(category);
 			// 이미지파일확장자추출
@@ -80,6 +78,7 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 	        webList.setFile_name(savedName);
 	        webList.setReal_name(originalFileName);
 	        webList.setFile_path(webImagePath);
+	        
 	        
 			webRepository.save(webList);
 			// 파일업로드
@@ -111,7 +110,6 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 				e.printStackTrace();
 			}
 		}else {//파일이 없을경우!
-			Category category = categoryRepository.findBymCode(webList.getCategoryname());
 			webList.setUser(user.get());
 	        webList.setCategory(category);
 			webRepository.save(webList);
@@ -143,13 +141,6 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 	@Override
    public Page<WebList> selectWebAll(Pageable pageable,String mCode,String searchParam,String appYn) {
 	      
-//	      final QWebList qWebList = webList;
-//	      
-//	      JPQLQuery query = from(webList);
-//	    		  				
-//	      List<WebList> webLists = getQuerydsl().applyPagination(pageable, query).fetch();
-//	      
-//	      long totalcount = query.fetchCount();
 		Category category = categoryRepository.findBymCode(mCode);
 		if(appYn.equals("Y")) {//승인된 조건
 			if(searchParam==null) {//검색조건이 없는경우
@@ -162,21 +153,23 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 				if(mCode.equals("All")) {
 					return webRepository.findAllByTitleLikeAndAppyn(pageable,"%"+searchParam+"%",'Y');
 				}else {
-					return webRepository.findAllByCategoryIdAndTitleLikeAndAppyn(pageable,category.getId(),searchParam,'Y');
+					return webRepository.findAllByCategoryIdAndTitleLikeAndAppyn(pageable,category.getId(),"%"+searchParam+"%",'Y');
 				}	
 			}
 		}else {
 			if(searchParam==null) {
 				if(mCode.equals("All")) {
+					
 					return webRepository.findAllByAppyn(pageable,'Y');
 				}else {
+					
 					return webRepository.findAllByCategoryIdAndAppyn(pageable,category.getId(),'Y');
 				}	
 			}else {
 				if(mCode.equals("All")) {
 					return webRepository.findAllByTitleLikeAndAppyn(pageable,"%"+searchParam+"%",'Y');
 				}else {
-					return webRepository.findAllByCategoryIdAndTitleLikeAndAppyn(pageable,category.getId(),searchParam,'Y');
+					return webRepository.findAllByCategoryIdAndTitleLikeAndAppyn(pageable,category.getId(),"%"+searchParam+"%",'Y');
 				}	
 			}
 		}
@@ -195,11 +188,12 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 		}
 		long current_time=System.currentTimeMillis();
 		//일정 시간이 경과한 후 조회수 증가 처리
-		if(current_time - update_time > 24*60*60*1000) {
+		if(current_time - update_time > 60*60*1000) {
 			//조회수 증가 처리 뒤에 밀리 세컨드 60*60*1000 한시간 *24 == 하루
 			webList.setViews(webList.getViews()+1);
 			webRepository.save(webList);
 			//조회수를 올린 시간 저장
+			System.out.println("세션중복체크");
 			session.setAttribute("update_time_"+id, current_time);
 		}
 		

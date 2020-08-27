@@ -64,7 +64,7 @@ public class AuthRestAPIs {
                         loginRequest.getPassword()
                 )
         );
-
+        System.out.println("authentication====="+authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String ROLE=auth.getAuthorities().toString();
@@ -79,29 +79,22 @@ public class AuthRestAPIs {
     @ResponseBody
     public ResponseEntity<String> registerUser(@RequestBody SignUpForm signUpRequest) {
         if(userRepository.existsByUserid(signUpRequest.getUserid())) {
-            return new ResponseEntity<String>("Fail -> userid is already taken!",
+            return new ResponseEntity<String>("아이디가 이미 존재합니다",
                     HttpStatus.BAD_REQUEST);
         }
 
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity<String>("Fail -> Email is already in use!",
+            return new ResponseEntity<String>("이메일이 이미 존재합니다",
                     HttpStatus.BAD_REQUEST);
         }
-        System.out.println("--------------log---------");
-        System.out.println(signUpRequest.getName());
-        System.out.println(signUpRequest.getUserid());
-        System.out.println(signUpRequest.getEmail());
-        System.out.println(signUpRequest.getPassword());
-        System.out.println("--------------log---------");
+      
         // Creating user's account
         User user = new User(signUpRequest.getName(), signUpRequest.getUserid(),
                 signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()));
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
-        System.out.println("signupRequest"+signUpRequest.getRole());
         strRoles.forEach(role -> {
-        	System.out.println("ROle??"+role);
         	switch(role) {
         	
 	    		case "admin":
@@ -126,6 +119,6 @@ public class AuthRestAPIs {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok().body("User registered successfully!");
+        return ResponseEntity.ok().body("회원가입 완료하였습니다");
     }
 }

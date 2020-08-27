@@ -18,6 +18,7 @@
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.Authentication;
 //import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.stereotype.Component;
 //import org.springframework.web.context.request.RequestContextHolder;
 //import org.springframework.web.context.request.ServletRequestAttributes;
@@ -63,11 +64,15 @@
 //
 //		long start = System.currentTimeMillis();
 //		try {
+//			 //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		     String username = auth.getName();
 //
+//		     String username = auth.getName();
+//		     System.out.println("++++++++++++++++");
+//		     System.out.println(username);
+//		     System.out.println("++++++++++++++++");
 //		     String anony = "";
-//		     Optional<Long> userid =Optional.ofNullable(0L);
+//		     String userid = null;
 //		     Optional<User> user = userRepository.findByUserid(username);
 //		     
 //		     SimpleDateFormat formatter = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss", Locale.KOREA );
@@ -87,11 +92,13 @@
 //			     userhistory.setLogindate(initTime);			//초기접속시간
 //			     userhistory.setSessionlastaccess(lastTime);	//마지막접속시간
 //			     userhistory.setOstype(request.getHeader("User-Agent"));
+//			    
 //		    	 if(!(username.equals("anonymousUser"))) {
+//		    		 System.out.println("ㅎㅎㅎㅎ");
 //					     User users=new User();
-//					     user.ifPresent(user1->user1.getId());
-//					     userid = Optional.ofNullable(user.get().getId());
-//					     users.setId(userid);
+//					     userid = user.get().getUserid();
+//					     System.out.println(userid);
+//					     users.setUserid(userid);
 //					     userhistory.setUser(users);
 //				 }
 //		         userHistoryRepository.save(userhistory);
