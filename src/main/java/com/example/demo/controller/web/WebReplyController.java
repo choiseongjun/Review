@@ -44,6 +44,24 @@ public class WebReplyController {
 			return new ResponseEntity<>("잘못된 요청입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	/*
+	 * 대댓글 생성
+	 * @param : WebReplyReq
+	 * @return : Reply
+	 * */	
+	@PostMapping("/reply/{id}")
+	public ResponseEntity<?> saveTreeReply(@PathVariable Long id,@RequestBody WebReplyReq webReplyReq,Principal principal) {
+		
+		try {
+			String user_id = principal.getName();
+			webReplyService.saveTreeReply(id,webReplyReq,user_id);
+			
+			return new ResponseEntity<>("성공입니다", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("잘못된 요청입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 	/*
 	 * 전체 댓글 조회

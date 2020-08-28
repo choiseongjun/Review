@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.domain.WebReply;
@@ -23,4 +24,12 @@ public interface ReplyRepository extends JpaRepository<WebReply, Long> {
 	List<WebReply> findAllByWeblistIdAndDeleteynOrderByIdDesc(Long id, char c);
 
 	List<WebReply> findAllByWeblistIdAndDeleteynOrderByIdAsc(Long id, char c);
+
+	List<WebReply> findAllByWeblistIdAndDeleteynOrderByIdDescReplyorderAsc(Long id, char c);
+
+	@Query("SELECT max(id)+1 from WebReply")
+	long selectMaxId();
+
+	List<WebReply> findAllByWeblistIdAndDeleteynOrderByParentDescReplyorderAsc(Long id, char c);
+
 }

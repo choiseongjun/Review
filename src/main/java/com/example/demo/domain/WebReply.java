@@ -38,15 +38,15 @@ public class WebReply extends DateAudit{
     
     //부모키
     @Column(name = "PARENT")
-    private String parent; 
+    private long parent; 
     
     //깊이
     @Column(name = "depth")
-    private String depth;
+    private long depth;
     
     //순서
     @Column(name = "REPLY_ORDER")
-    private String replyorder;
+    private long replyorder;
     
     //삭제여부
     @Column(name = "DELETE_YN",columnDefinition = "CHAR(1) default 'N'")

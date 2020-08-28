@@ -14,4 +14,5 @@ public interface WebReplyService {
 	List<WebReply> findAllReply(Long id);
 	boolean editReply(WebReplyReq webReplyReq, String user_id);
 	boolean deleteReply(Long id);
+	void saveTreeReply(Long id, WebReplyReq webReplyReq, String user_id);
 }

@@ -3,9 +3,10 @@ package com.example.demo.service.web;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.User;
 import com.example.demo.domain.WebList;
@@ -15,6 +16,7 @@ import com.example.demo.repository.ReplyRepository;
 import com.example.demo.repository.UserRepository;
 
 @Service
+@Transactional
 public class WebReplyServiceImpl implements WebReplyService{
 
 	@Autowired
@@ -28,24 +30,30 @@ public class WebReplyServiceImpl implements WebReplyService{
 		Optional<User> user = userRepository.findByUserid(user_id);
 //		User user = userRepository.getOne(webReplyReq.getUser_id());
 		
+		long seqId = replyRepository.selectMaxId();//최대값 가져오기
+		
+		
 		WebList webList = new WebList();
 		webList.setId(webReplyReq.getWeblist_id());
 		WebReply webReply = new WebReply();
+		webReply.setId(seqId);
 		webReply.setUser(user.get());
 		webReply.setWeblist(webList);
 		webReply.setStar(webReplyReq.getStar());
 		webReply.setContent(webReplyReq.getContent());
 //		webReply.setParent(webReplyReq.getParent());
 		webReply.setDeleteyn('N');
-		
+		webReply.setDepth(0); 
+		webReply.setReplyorder(0);
+		webReply.setParent(seqId);
 		WebReply reply = replyRepository.save(webReply);
-		
+		 
 		return reply;
 	}
 
-	@Override
+	@Override 
 	public List<WebReply> findAllReply(Long id) {
-		List<WebReply> replys = replyRepository.findAllByWeblistIdAndDeleteynOrderByIdDesc(id,'N');
+		List<WebReply> replys = replyRepository.findAllByWeblistIdAndDeleteynOrderByParentDescReplyorderAsc(id,'N');
 		return replys;
 	}
 
@@ -82,6 +90,31 @@ public class WebReplyServiceImpl implements WebReplyService{
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	
+
+	@Override
+	public void saveTreeReply(Long id, WebReplyReq webReplyReq, String user_id) {
+		Optional<WebReply> reply = replyRepository.findById(id);
+		Optional<User> user = userRepository.findByUserid(user_id);
+		reply.ifPresent(selectReply -> {//부모댓글 패런트를 키랑 맞추기
+			selectReply.setParent(id);
+			replyRepository.save(selectReply);
+		});
+		WebList webList = new WebList();
+		webList.setId(webReplyReq.getWeblist_id());
+
+		WebReply webReply =new WebReply();
+		webReply.setUser(user.get());
+		webReply.setWeblist(webList);
+		webReply.setStar(webReplyReq.getStar());
+		webReply.setContent(webReplyReq.getContent());
+//		webReply.setParent(webReplyReq.getParent());
+		webReply.setParent(id);
+		webReply.setDeleteyn('N');
+		webReply.setReplyorder(reply.get().getReplyorder()+1);
+		replyRepository.save(webReply);
 	}
 	
 	
