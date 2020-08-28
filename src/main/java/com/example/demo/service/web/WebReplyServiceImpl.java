@@ -98,10 +98,7 @@ public class WebReplyServiceImpl implements WebReplyService{
 	public void saveTreeReply(Long id, WebReplyReq webReplyReq, String user_id) {
 		Optional<WebReply> reply = replyRepository.findById(id);
 		Optional<User> user = userRepository.findByUserid(user_id);
-		reply.ifPresent(selectReply -> {//부모댓글 패런트를 키랑 맞추기
-			selectReply.setParent(id);
-			replyRepository.save(selectReply);
-		});
+		
 		WebList webList = new WebList();
 		webList.setId(webReplyReq.getWeblist_id());
 
