@@ -78,6 +78,7 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 	        webList.setFile_name(savedName);
 	        webList.setReal_name(originalFileName);
 	        webList.setFile_path(webImagePath);
+	        webList.setAppyn('N');
 	        
 	        
 			webRepository.save(webList);
@@ -160,16 +161,16 @@ public class WebServiceImpl extends QuerydslRepositorySupport implements WebServ
 			if(searchParam==null) {
 				if(mCode.equals("All")) {
 					
-					return webRepository.findAllByAppyn(pageable,'Y');
+					return webRepository.findAllByAppyn(pageable,'N');
 				}else {
 					
-					return webRepository.findAllByCategoryIdAndAppyn(pageable,category.getId(),'Y');
+					return webRepository.findAllByCategoryIdAndAppyn(pageable,category.getId(),'N');
 				}	
 			}else {
 				if(mCode.equals("All")) {
-					return webRepository.findAllByTitleLikeAndAppyn(pageable,"%"+searchParam+"%",'Y');
+					return webRepository.findAllByTitleLikeAndAppyn(pageable,"%"+searchParam+"%",'N');
 				}else {
-					return webRepository.findAllByCategoryIdAndTitleLikeAndAppyn(pageable,category.getId(),"%"+searchParam+"%",'Y');
+					return webRepository.findAllByCategoryIdAndTitleLikeAndAppyn(pageable,category.getId(),"%"+searchParam+"%",'N');
 				}	
 			}
 		}
